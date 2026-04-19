@@ -38,7 +38,21 @@
     --muted: #6B6B6B;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+  }
+  section[id] {
+    scroll-margin-top: calc(96px + env(safe-area-inset-top, 0px));
+  }
+  @media (max-width: 960px) {
+    html {
+      scroll-padding-top: calc(104px + env(safe-area-inset-top, 0px));
+    }
+    section[id] {
+      scroll-margin-top: calc(104px + env(safe-area-inset-top, 0px));
+    }
+  }
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--black);
@@ -726,43 +740,15 @@
   }
   .coverage-header {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 48px;
-    align-items: end;
-    margin-bottom: 56px;
-    padding-bottom: 40px;
+    grid-template-columns: 1fr;
+    gap: 0;
+    align-items: start;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .coverage-header-left .section-label { color: var(--yellow); }
   .coverage-header-left .section-label::before { background: var(--yellow); }
-  .coverage-header-left h2 { color: var(--white); max-width: 18ch; }
-  .coverage-sub {
-    color: rgba(255,255,255,0.6);
-    font-size: 16px;
-    line-height: 1.6;
-    max-width: 52ch;
-  }
-  .coverage-stats {
-    display: grid;
-    grid-auto-flow: column;
-    gap: 48px;
-  }
-  .coverage-stat-num {
-    font-family: var(--font-display);
-    font-size: 56px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--yellow);
-    letter-spacing: -0.03em;
-  }
-  .coverage-stat-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-top: 8px;
-  }
 
   .coverage-map-wrap {
     position: relative;
@@ -771,26 +757,6 @@
     border-radius: 2px;
     padding: 32px;
   }
-  .coverage-legend {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 16px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-  }
-  .legend-item { display: flex; align-items: center; gap: 8px; }
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .legend-dot.licensed { background: var(--yellow); box-shadow: 0 0 0 3px rgba(241,194,49,0.18); }
-  .legend-dot.hq { background: var(--white); box-shadow: 0 0 0 3px rgba(255,255,255,0.12); }
-  .legend-dot.inactive { background: #2a2a2a; border: 1px solid rgba(255,255,255,0.15); }
-
   .coverage-map {
     position: relative;
     width: 100%;
@@ -809,20 +775,23 @@
   }
   .coverage-map .state.licensed {
     fill: #2a2a2a;
-    cursor: pointer;
+    cursor: default;
   }
   .coverage-map .state.licensed:hover {
     fill: var(--yellow);
   }
   .coverage-map .state.hq {
     fill: #3a3a3a;
-    cursor: pointer;
+    cursor: default;
   }
   .coverage-map .state.hq:hover {
     fill: var(--yellow);
   }
-  .coverage-map .state.active {
-    fill: var(--yellow) !important;
+  @media (hover: none) {
+    .coverage-map .state.licensed,
+    .coverage-map .state.licensed:hover { fill: #2a2a2a; }
+    .coverage-map .state.hq,
+    .coverage-map .state.hq:hover { fill: #3a3a3a; }
   }
   .coverage-map .hq-marker {
     fill: var(--white);
@@ -854,59 +823,6 @@
     fill: rgba(255,255,255,0.15);
   }
 
-  .coverage-tooltip {
-    position: absolute;
-    top: 0; left: 0;
-    background: var(--white);
-    color: var(--black);
-    padding: 14px 16px;
-    border-radius: 2px;
-    min-width: 200px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-    pointer-events: none;
-    opacity: 0;
-    transform: translate(-50%, calc(-100% - 12px));
-    transition: opacity 0.15s ease;
-    z-index: 10;
-  }
-  .coverage-tooltip.visible { opacity: 1; }
-  .coverage-tooltip::after {
-    content: "";
-    position: absolute;
-    bottom: -6px; left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 12px; height: 12px;
-    background: var(--white);
-  }
-  .tip-state {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-  }
-  .tip-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 4px 0;
-    font-size: 12px;
-  }
-  .tip-row span {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .tip-row strong {
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .tip-status { color: oklch(0.55 0.18 140); }
-
   .coverage-loading {
     position: absolute;
     inset: 0;
@@ -920,46 +836,9 @@
   }
   .coverage-loading.hidden { display: none; }
 
-  .coverage-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .coverage-pill {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 6px 12px;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 999px;
-    color: rgba(255,255,255,0.75);
-    background: rgba(255,255,255,0.02);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .coverage-pill:hover,
-  .coverage-pill.active {
-    background: var(--yellow);
-    color: var(--black);
-    border-color: var(--yellow);
-  }
-  .coverage-pill.hq::before {
-    content: "★";
-    margin-right: 6px;
-    color: var(--yellow);
-  }
-  .coverage-pill.active.hq::before { color: var(--black); }
-
   @media (max-width: 960px) {
     .coverage-header { grid-template-columns: 1fr; gap: 32px; }
-    .coverage-stats { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .coverage-stat-num { font-size: 40px; }
     .coverage-map-wrap { padding: 16px; }
-    .coverage-legend { flex-wrap: wrap; gap: 12px; font-size: 9px; }
   }
 
   /* ============ CLIENTS ============ */
@@ -1329,10 +1208,6 @@
     .project-card .project-img { aspect-ratio: 4/3; }
     .coverage-header { gap: 24px; }
     .coverage-map-wrap { padding: 14px; }
-    .coverage-legend { flex-wrap: wrap; gap: 10px 16px; font-size: 9px; margin-bottom: 12px; }
-    .coverage-pills { gap: 6px; margin-top: 18px; padding-top: 18px; }
-    .coverage-pill { font-size: 9px; padding: 5px 10px; letter-spacing: 0.1em; }
-    .coverage-tooltip { min-width: 170px; padding: 12px 14px; }
     .tip-state { font-size: 16px; }
     .footer-top { gap: 40px; padding-bottom: 48px; }
     .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
@@ -1360,9 +1235,7 @@
     .contact-form { padding: 20px; }
     .btn { font-size: 13px; padding: 11px 18px; }
     .btn-lg { font-size: 14px; padding: 14px 22px; }
-    .coverage-pill { font-size: 8.5px; padding: 4px 9px; }
     .coverage-map-wrap { padding: 10px; }
-    .coverage-tooltip { min-width: 150px; padding: 10px 12px; }
     .tweaks-panel { width: calc(100vw - 24px); right: 12px; bottom: 12px; }
   }
 
@@ -1467,7 +1340,7 @@
     .nav { position: static !important; transform: none !important; gap: 20px !important; }
     .fade { opacity: 1 !important; transform: none !important; }
     .footer-marquee { display: none !important; }
-    .coverage-tooltip, .coverage-loading { display: none !important; }
+    .coverage-loading { display: none !important; }
     .projects-filters { display: none !important; }
 
     /* Hero — shrink, no fixed min-height */
@@ -1804,31 +1677,14 @@
     <div class="coverage-header fade">
       <div class="coverage-header-left">
         <div class="section-label">Where We Build</div>
-        <h2 class="display section-heading" style="margin: 0 0 16px;">Licensed & active across 18 states.</h2>
-        <p class="coverage-sub">Covenant holds active general contractor licensing, insurance, and bonding across the Eastern seaboard. Hover any highlighted state for project count and metro coverage.</p>
       </div>
     </div>
 
     <div class="coverage-map-wrap fade">
-      <div class="coverage-legend">
-        <div class="legend-item"><span class="legend-dot licensed"></span>Licensed & Active</div>
-        <div class="legend-item"><span class="legend-dot hq"></span>Headquarters</div>
-        <div class="legend-item"><span class="legend-dot inactive"></span>Coming Soon</div>
-      </div>
-      <div class="coverage-map" id="coverageMap">
-        <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" aria-label="US coverage map"></svg>
-        <div class="coverage-tooltip" id="coverageTip" aria-hidden="true">
-          <div class="tip-state">—</div>
-          <div class="tip-body">
-            <div class="tip-row"><span>Status</span><strong class="tip-status">—</strong></div>
-            <div class="tip-row"><span>Projects</span><strong class="tip-projects">—</strong></div>
-            <div class="tip-row"><span>Coverage</span><strong class="tip-metro">—</strong></div>
-          </div>
-        </div>
+      <div class="coverage-map" id="coverageMap" role="img" aria-label="United States map — highlighted states show where Covenant is licensed. Decorative.">
+        <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
         <div class="coverage-loading" id="coverageLoading">Loading map…</div>
       </div>
-
-      <div class="coverage-pills" id="coveragePills"></div>
     </div>
   </div>
 </section>
@@ -2307,9 +2163,6 @@
         const data = coverageData[fips];
         if (data) {
           el.classList.add(data.status === 'HQ' ? 'hq' : 'licensed');
-          el.dataset.status = data.status;
-          el.dataset.projects = data.projects;
-          el.dataset.metro = data.metro;
         }
         gStates.appendChild(el);
 
@@ -2343,8 +2196,6 @@
       }
 
       document.getElementById('coverageLoading').classList.add('hidden');
-      setupMapInteractions();
-      buildCoveragePills();
     } catch (err) {
       console.error('Map load failed', err);
       document.getElementById('coverageLoading').textContent = 'Map unavailable';
@@ -2358,65 +2209,6 @@
       s.onload = resolve;
       s.onerror = reject;
       document.head.appendChild(s);
-    });
-  }
-
-  function setupMapInteractions() {
-    const svg = document.getElementById('usMap');
-    const tip = document.getElementById('coverageTip');
-    const wrap = document.getElementById('coverageMap');
-
-    svg.addEventListener('mousemove', (e) => {
-      const el = e.target.closest('.state');
-      if (!el || (!el.classList.contains('licensed') && !el.classList.contains('hq'))) {
-        tip.classList.remove('visible');
-        return;
-      }
-      const rect = wrap.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      tip.style.left = x + 'px';
-      tip.style.top = y + 'px';
-      tip.querySelector('.tip-state').textContent = el.dataset.name;
-      tip.querySelector('.tip-status').textContent = el.dataset.status;
-      tip.querySelector('.tip-projects').textContent = el.dataset.projects;
-      tip.querySelector('.tip-metro').textContent = el.dataset.metro;
-      tip.classList.add('visible');
-    });
-    svg.addEventListener('mouseleave', () => tip.classList.remove('visible'));
-  }
-
-  function buildCoveragePills() {
-    const pills = document.getElementById('coveragePills');
-    const entries = Object.entries(coverageData).sort((a, b) => {
-      if (a[1].status === 'HQ') return -1;
-      if (b[1].status === 'HQ') return 1;
-      return a[1].name.localeCompare(b[1].name);
-    });
-    pills.innerHTML = entries.map(([fips, d]) =>
-      `<button class="coverage-pill ${d.status === 'HQ' ? 'hq' : ''}" data-fips="${fips}">${d.name}</button>`
-    ).join('');
-    pills.addEventListener('click', (e) => {
-      const btn = e.target.closest('.coverage-pill');
-      if (!btn) return;
-      document.querySelectorAll('.coverage-pill').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
-      btn.classList.add('active');
-      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
-      if (st) st.classList.add('active');
-    });
-    pills.addEventListener('mouseover', (e) => {
-      const btn = e.target.closest('.coverage-pill');
-      if (!btn) return;
-      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
-      if (st) st.classList.add('active');
-    });
-    pills.addEventListener('mouseout', (e) => {
-      const btn = e.target.closest('.coverage-pill');
-      if (!btn) return;
-      if (btn.classList.contains('active')) return;
-      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
-      if (st) st.classList.remove('active');
     });
   }
 
