@@ -1900,7 +1900,7 @@
         <p class="sub">A selection of projects delivered across multiple industries and locations.</p>
       </div>
       <div class="projects-filters" id="projectFilters">
-        <button class="filter-chip active" data-filter="all">All · 15</button>
+        <button class="filter-chip active" data-filter="all">All · 17</button>
         <button class="filter-chip" data-filter="food">Food &amp; Bev</button>
         <button class="filter-chip" data-filter="retail">Retail</button>
         <button class="filter-chip" data-filter="wellness">Wellness</button>
@@ -1911,7 +1911,7 @@
     <div class="projects-grid" id="projectsGrid"></div>
 
     <div class="projects-footer fade">
-      <div class="projects-count" id="projectsCount">Showing 15 of 15 projects</div>
+      <div class="projects-count" id="projectsCount">Showing 17 of 17 projects</div>
     </div>
   </div>
 </section>
@@ -2353,6 +2353,8 @@
     { name: "SWTHZ", location: "Aventura, FL", type: "wellness", hue: 180, image: "project-images/swthz.jpg" },
     { name: "Tee Box", location: "Hallandale Beach, FL", type: "entertainment", hue: 120, image: "project-images/tee-box.jpg" },
     { name: "Zunzibar", location: "Middleton, FL", type: "food", hue: 50, image: "project-images/zunzibar.jpg" },
+    { name: "Dutch Bros", location: "Kissimmee, FL", type: "food", hue: 250, dark: true, image: "project-images/dutch-bros-kissimmee.png" },
+    { name: "Kids Empire", location: "Wellington, FL", type: "entertainment", hue: 300, image: "project-images/kids-empire-wellington.png" },
   ];
   const typeLabels = {
     food: "FOOD & BEV",
@@ -2389,6 +2391,8 @@
       </article>`;
     }).join('');
     document.getElementById('projectsCount').textContent = `Showing ${filtered.length} of ${projects.length} projects`;
+    const allChip = document.querySelector('#projectFilters .filter-chip[data-filter="all"]');
+    if (allChip) allChip.textContent = `All · ${projects.length}`;
   }
   renderProjects();
 
