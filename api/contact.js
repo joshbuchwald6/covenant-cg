@@ -110,7 +110,7 @@ module.exports = async (req, res) => {
     return res.status(400).json({ ok: false, error: 'Invalid input.' })
   }
 
-  const to = process.env.CONTACT_TO_EMAIL || 'devin@covenant-cg.com'
+  const to = process.env.CONTACT_TO_EMAIL || 'devinrlondos@gmail.com'
   const from =
     process.env.CONTACT_FROM ||
     'Covenant Website <onboarding@resend.dev>'
