@@ -2089,9 +2089,9 @@
           <div class="err-msg">Please select a service.</div>
         </div>
         <div class="form-field">
-          <label for="details">Project Details *</label>
+          <label for="details">Project Details</label>
           <textarea id="details" name="details" placeholder="Tell us about scope, timeline, location, and budget range."></textarea>
-          <div class="err-msg">Please share some project context.</div>
+          <div class="err-msg"></div>
         </div>
         <div class="form-submit">
           <p class="form-note">By submitting, you'll connect with our preconstruction team.</p>
@@ -2721,16 +2721,14 @@
     let valid = true;
     const name = form.name;
     const email = form.email;
-    const details = form.details;
     const service = form.service;
 
-    [name, email, details, service].forEach((f) =>
+    [name, email, service].forEach((f) =>
       f.closest('.form-field').classList.remove('error'));
 
     if (!name.value.trim()) { name.closest('.form-field').classList.add('error'); valid = false; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.closest('.form-field').classList.add('error'); valid = false; }
     if (!service.value) { service.closest('.form-field').classList.add('error'); valid = false; }
-    if (details.value.trim().length < 10) { details.closest('.form-field').classList.add('error'); valid = false; }
 
     if (!valid) return;
 
@@ -2740,7 +2738,7 @@
       email: email.value.trim(),
       phone: form.phone.value.trim(),
       service: service.value,
-      details: details.value.trim()
+      details: form.details.value.trim()
     };
 
     const prevHtml = submitBtn.innerHTML;

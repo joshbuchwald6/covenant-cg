@@ -90,11 +90,8 @@ module.exports = async (req, res) => {
   if (!SERVICES.has(service)) {
     return res.status(400).json({ ok: false, error: 'Please select a service.' })
   }
-  if (details.length < 10 || details.length > LIMITS.details) {
-    return res.status(400).json({
-      ok: false,
-      error: 'Please share more project context (at least 10 characters).'
-    })
+  if (details.length > LIMITS.details) {
+    return res.status(400).json({ ok: false, error: 'Invalid input.' })
   }
   if (company.length > LIMITS.company || phone.length > LIMITS.phone) {
     return res.status(400).json({ ok: false, error: 'Invalid input.' })
@@ -120,7 +117,7 @@ module.exports = async (req, res) => {
     <tr><td style="padding:6px 12px 6px 0;color:#666;vertical-align:top;">Service</td><td>${escapeHtml(serviceLabel)}</td></tr>
   </table>
   <h3 style="margin:20px 0 8px;">Project details</h3>
-  <p style="white-space:pre-wrap;margin:0;">${escapeHtml(details)}</p>
+  <p style="white-space:pre-wrap;margin:0;">${details ? escapeHtml(details) : '—'}</p>
 </body></html>`
 
   const text = [
@@ -133,7 +130,7 @@ module.exports = async (req, res) => {
     `Service: ${serviceLabel}`,
     '',
     'Project details:',
-    details
+    details || '—'
   ].join('\n')
 
   const resend = new Resend(apiKey)
