@@ -695,7 +695,7 @@
     position: relative;
     aspect-ratio: 4/5;
     overflow: hidden;
-    cursor: pointer;
+    cursor: default;
     border-radius: 2px;
     background: var(--medium-gray);
   }
@@ -2234,7 +2234,7 @@
   }/*EDITMODE-END*/;
 
   // ============ ROUTE CTAs TO CONTACT ============
-  // Service cards, project cards, and inline "Learn more / Explore" links all scroll to #contact.
+  // Service cards and inline "Learn more / Explore" links scroll to #contact. Project cards are display-only.
   const serviceMap = {
     'general contracting': 'general-contracting',
     'planning & design': 'planning-design',
@@ -2254,7 +2254,7 @@
     window.scrollTo({ top, behavior: 'smooth' });
   }
   document.addEventListener('click', (e) => {
-    const card = e.target.closest('.service-card, .project-card, .service-link');
+    const card = e.target.closest('.service-card, .service-link');
     if (!card) return;
     // ignore real <a> clicks so existing links still work
     if (e.target.closest('a[href]')) return;
@@ -2269,7 +2269,7 @@
     scrollToContact(prefill);
   });
   // give them a pointer cursor for discoverability
-  document.querySelectorAll('.service-card, .project-card, .service-link').forEach(el => {
+  document.querySelectorAll('.service-card, .service-link').forEach(el => {
     el.style.cursor = 'pointer';
   });
 
