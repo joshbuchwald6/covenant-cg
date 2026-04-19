@@ -1338,6 +1338,22 @@
     border-radius: 50%;
     flex-shrink: 0;
   }
+  .form-api-error {
+    display: none;
+    padding: 16px 20px;
+    background: #fff5f5;
+    color: #c92a2a;
+    border: 1px solid #ffc9c9;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .form-api-error.show { display: block; }
+  .contact-form button[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 
   /* ============ FOOTER ============ */
   .footer {
@@ -2034,6 +2050,7 @@
           <h3>Project Inquiry</h3>
           <span class="tag">RESPONSE · 24H</span>
         </div>
+        <div class="form-api-error" id="formApiError" role="alert"></div>
         <div class="form-row">
           <div class="form-field">
             <label for="name">Full Name *</label>
@@ -2684,23 +2701,74 @@
 
   // ============ FORM ============
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
-    const name = form.name, email = form.email, details = form.details, service = form.service;
+  const formApiError = document.getElementById('formApiError');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-    [name, email, details, service].forEach(f => f.closest('.form-field').classList.remove('error'));
+  function hideFormApiError () {
+    formApiError.textContent = '';
+    formApiError.classList.remove('show');
+  }
+
+  function showFormApiError (msg) {
+    formApiError.textContent = msg;
+    formApiError.classList.add('show');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideFormApiError();
+
+    let valid = true;
+    const name = form.name;
+    const email = form.email;
+    const details = form.details;
+    const service = form.service;
+
+    [name, email, details, service].forEach((f) =>
+      f.closest('.form-field').classList.remove('error'));
 
     if (!name.value.trim()) { name.closest('.form-field').classList.add('error'); valid = false; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.closest('.form-field').classList.add('error'); valid = false; }
     if (!service.value) { service.closest('.form-field').classList.add('error'); valid = false; }
     if (details.value.trim().length < 10) { details.closest('.form-field').classList.add('error'); valid = false; }
 
-    if (valid) {
+    if (!valid) return;
+
+    const payload = {
+      name: name.value.trim(),
+      company: form.company.value.trim(),
+      email: email.value.trim(),
+      phone: form.phone.value.trim(),
+      service: service.value,
+      details: details.value.trim()
+    };
+
+    const prevHtml = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const r = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json().catch(() => ({}));
+
+      if (!r.ok || !j.ok) {
+        showFormApiError(j.error || 'Something went wrong. Please try again or email us directly.');
+        return;
+      }
+
       document.getElementById('formSuccess').classList.add('show');
-      form.querySelectorAll('input, textarea').forEach(el => el.value = '');
-      form.querySelectorAll('select').forEach(el => el.value = '');
+      form.querySelectorAll('input, textarea').forEach((el) => { el.value = ''; });
+      form.querySelectorAll('select').forEach((el) => { el.value = ''; });
       setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 6000);
+    } catch {
+      showFormApiError('Could not reach the server. Check your connection or email us directly.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = prevHtml;
     }
   });
 

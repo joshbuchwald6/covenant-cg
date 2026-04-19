@@ -1,0 +1,7 @@
+{
+  "name": "covenant-cg",
+  "private": true,
+  "dependencies": {
+    "resend": "^4.0.1"
+  }
+}
