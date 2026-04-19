@@ -1,0 +1,2542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Covenant Construction — Building More Than a Bond</title>
+<meta name="description" content="Covenant Construction delivers high quality commercial construction, design, and project management solutions with precision, trust, and experience." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --yellow: #F1C231;
+    --yellow-hover: #D9AC24;
+    --white: #FFFFFF;
+    --dark-gray: #111111;
+    --medium-gray: #2A2A2A;
+    --light-gray: #F5F5F5;
+    --border: #E5E5E5;
+    --muted: #6B6B6B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .display {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+  }
+  .header.scrolled {
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 76px;
+  }
+  .logo {
+    display: flex; align-items: center;
+    text-decoration: none;
+  }
+  .logo svg { display: block; height: 36px; width: auto; }
+  .logo .wordmark { fill: #fff; transition: fill 0.35s ease; }
+  .logo .peak-black { fill: #fff; transition: fill 0.35s ease; }
+  .header.scrolled .logo .wordmark,
+  .header.scrolled .logo .peak-black { fill: #000; }
+  .footer .logo .wordmark,
+  .footer .logo .peak-black { fill: #fff; }
+  .nav {
+    display: flex; gap: 36px;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.35s ease, opacity 0.2s ease;
+    opacity: 0.85;
+    position: relative;
+  }
+  .nav a:hover { opacity: 1; }
+  .nav a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -8px; left: 0; right: 0;
+    height: 2px;
+    background: var(--yellow);
+  }
+  .header.scrolled .nav a { color: var(--black); opacity: 0.75; }
+  .header.scrolled .nav a:hover { opacity: 1; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: inherit;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--black);
+  }
+  .btn-primary:hover { background: var(--yellow-hover); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+  .btn-dark {
+    background: var(--black);
+    color: var(--white);
+  }
+  .btn-dark:hover { background: var(--medium-gray); }
+  .btn-lg { padding: 16px 28px; font-size: 15px; }
+  .btn .arrow { transition: transform 0.2s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    color: var(--white);
+    display: flex;
+    align-items: flex-end;
+    padding-top: 140px;
+    padding-bottom: 140px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -2;
+    background:
+      linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #0a0a0a 100%);
+  }
+  .hero-bg::before {
+    /* Placeholder "construction image" — subtle diagonal striping */
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(112deg, rgba(241,194,49,0.04) 0 2px, transparent 2px 80px),
+      repeating-linear-gradient(22deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 60px),
+      radial-gradient(ellipse at 75% 30%, rgba(241,194,49,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.04) 0%, transparent 60%);
+  }
+  .hero-bg::after {
+    /* Black overlay */
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.88) 100%);
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: calc(100% / 12) 100%;
+    pointer-events: none;
+  }
+  .hero-placeholder-label {
+    position: absolute;
+    top: 50%; right: 48px;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: right center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+  .hero-content { position: relative; z-index: 2; width: 100%; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 32px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 32px; height: 1px;
+    background: var(--yellow);
+  }
+  .hero h1 {
+    font-size: clamp(52px, 7.5vw, 112px);
+    max-width: 13ch;
+    margin-bottom: 32px;
+  }
+  .hero h1 .accent { color: var(--yellow); }
+  .hero-sub {
+    font-size: 18px;
+    max-width: 52ch;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.55;
+    margin-bottom: 48px;
+  }
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .hero-meta {
+    position: absolute;
+    bottom: 180px;
+    right: 48px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .hero-meta strong { color: var(--white); font-weight: 500; }
+
+  /* ============ STATS ============ */
+  .stats {
+    position: relative;
+    margin-top: -80px;
+    z-index: 5;
+    padding: 0 32px 120px;
+  }
+  .stats-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 48px -16px rgba(0,0,0,0.12), 0 4px 12px -4px rgba(0,0,0,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .stat-card {
+    background: var(--white);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--black);
+    display: flex;
+    align-items: baseline;
+  }
+  .stat-num .plus {
+    color: var(--yellow);
+    font-size: 0.65em;
+    margin-left: 4px;
+  }
+  .stat-label {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.4;
+    max-width: 22ch;
+  }
+  .stat-tag {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.55;
+  }
+
+  /* ============ SECTION CHROME ============ */
+  section { position: relative; }
+  .section-pad { padding: 120px 0; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .section-label::before {
+    content: "";
+    width: 24px; height: 1px;
+    background: var(--yellow);
+  }
+  .section-label.light { color: rgba(255,255,255,0.7); }
+  .section-heading {
+    font-size: clamp(36px, 5vw, 64px);
+    max-width: 20ch;
+  }
+
+  /* ============ ABOUT ============ */
+  .about {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-left h2 { font-size: clamp(40px, 4.6vw, 60px); max-width: 14ch; }
+  .about-right p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .about-right p:last-child { margin-bottom: 0; }
+  .about-image {
+    margin-top: 64px;
+    height: 440px;
+    border-radius: 2px;
+    background:
+      linear-gradient(135deg, #151515 0%, #2a2a2a 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+  }
+  .about-image::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(241,194,49,0.05) 0 2px, transparent 2px 40px),
+      repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 30px);
+  }
+  .about-image::after {
+    content: "";
+    position: absolute;
+    top: 24px; left: 24px;
+    width: 60px; height: 60px;
+    border-top: 2px solid var(--yellow);
+    border-left: 2px solid var(--yellow);
+  }
+  .about-image-label {
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .about-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+  .about-highlight {
+    padding-right: 24px;
+  }
+  .about-highlight .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--yellow);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+  .about-highlight h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .about-highlight p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ============ SERVICES ============ */
+  .services {
+    background: var(--light-gray);
+    border-top: 1px solid var(--border);
+  }
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 72px;
+  }
+  .services-header p {
+    font-size: 16px;
+    color: #444;
+    max-width: 46ch;
+    line-height: 1.6;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .service-card {
+    background: var(--white);
+    padding: 40px 36px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: #d0d0d0;
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.1);
+  }
+  .service-card.feat {
+    grid-column: span 2;
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  .service-card.feat:hover { border-color: var(--yellow); }
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .service-card.feat .service-num { color: rgba(255,255,255,0.6); }
+  .service-icon {
+    width: 48px; height: 48px;
+    display: grid; place-items: center;
+    margin-bottom: 32px;
+    color: var(--yellow);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--light-gray);
+    transition: background 0.3s ease;
+  }
+  .service-card.feat .service-icon {
+    background: var(--medium-gray);
+    border-color: var(--medium-gray);
+  }
+  .service-card:hover .service-icon { background: var(--white); }
+  .service-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .service-card.feat h3 { font-size: 32px; max-width: 14ch; }
+  .service-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+  .service-card.feat p { color: rgba(255,255,255,0.7); font-size: 15px; max-width: 44ch; }
+  .service-card .service-link {
+    margin-top: auto;
+    padding-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .service-card .service-link .arrow { transition: transform 0.3s ease; }
+  .service-card:hover .service-link .arrow { transform: translateX(4px); }
+
+  /* ============ PROJECTS ============ */
+  .projects {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .projects-header .sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 44ch;
+    margin-top: 16px;
+  }
+  .projects-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .filter-chip {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--black);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+  .filter-chip:hover { border-color: var(--black); }
+  .filter-chip.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .project-card {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 2px;
+    background: var(--medium-gray);
+  }
+  .project-card .project-img {
+    position: absolute; inset: 0;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    background-size: cover;
+    background-position: center;
+  }
+  .project-card:hover .project-img { transform: scale(1.06); }
+  .project-card .project-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.85) 100%);
+    transition: opacity 0.4s ease;
+  }
+  .project-card:hover .project-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%);
+  }
+  .project-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 28px;
+    color: var(--white);
+    z-index: 2;
+  }
+  .project-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .project-info h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .project-info .loc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .project-card .project-number {
+    position: absolute;
+    top: 20px; left: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.7);
+    z-index: 2;
+  }
+  .project-card .project-arrow {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    background: var(--yellow);
+    color: var(--black);
+    display: grid; place-items: center;
+    z-index: 2;
+    opacity: 0;
+    transform: translate(-8px, 8px);
+    transition: all 0.4s ease;
+    border-radius: 2px;
+  }
+  .project-card:hover .project-arrow { opacity: 1; transform: translate(0,0); }
+
+  .projects-footer {
+    margin-top: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .projects-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  /* ============ CORE VALUES ============ */
+  .values {
+    background: var(--black);
+    color: var(--white);
+    border-top: 1px solid var(--medium-gray);
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 64px;
+    border-top: 1px solid var(--medium-gray);
+  }
+  .value-card {
+    padding: 56px 40px 56px 0;
+    border-right: 1px solid var(--medium-gray);
+    position: relative;
+  }
+  .value-card:last-child { border-right: none; padding-right: 0; }
+  .value-card:not(:first-child) { padding-left: 40px; }
+  .value-icon {
+    width: 56px; height: 56px;
+    color: var(--yellow);
+    margin-bottom: 32px;
+  }
+  .value-num {
+    position: absolute;
+    top: 56px; right: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.35);
+  }
+  .value-card:last-child .value-num { right: 0; }
+  .value-card:not(:last-child) .value-num { right: 40px; }
+  .value-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .value-card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 32ch;
+  }
+  .values-headline {
+    font-size: clamp(36px, 4.4vw, 54px);
+    max-width: 18ch;
+  }
+  .values-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  .values-header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 44ch;
+  }
+
+  /* ============ COVERAGE MAP ============ */
+  .coverage {
+    background: var(--black);
+    color: var(--white);
+    border-top: 1px solid var(--medium-gray);
+  }
+  .coverage-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .coverage-header-left .section-label { color: var(--yellow); }
+  .coverage-header-left .section-label::before { background: var(--yellow); }
+  .coverage-header-left h2 { color: var(--white); max-width: 18ch; }
+  .coverage-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+  .coverage-stats {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 48px;
+  }
+  .coverage-stat-num {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--yellow);
+    letter-spacing: -0.03em;
+  }
+  .coverage-stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+  }
+
+  .coverage-map-wrap {
+    position: relative;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    padding: 32px;
+  }
+  .coverage-legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .legend-dot.licensed { background: var(--yellow); box-shadow: 0 0 0 3px rgba(241,194,49,0.18); }
+  .legend-dot.hq { background: var(--white); box-shadow: 0 0 0 3px rgba(255,255,255,0.12); }
+  .legend-dot.inactive { background: #2a2a2a; border: 1px solid rgba(255,255,255,0.15); }
+
+  .coverage-map {
+    position: relative;
+    width: 100%;
+  }
+  .coverage-map svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .coverage-map .state {
+    fill: #1a1a1a;
+    stroke: #000;
+    stroke-width: 0.7;
+    transition: fill 0.2s ease;
+    cursor: default;
+  }
+  .coverage-map .state.licensed {
+    fill: #2a2a2a;
+    cursor: pointer;
+  }
+  .coverage-map .state.licensed:hover {
+    fill: var(--yellow);
+  }
+  .coverage-map .state.hq {
+    fill: #3a3a3a;
+    cursor: pointer;
+  }
+  .coverage-map .state.hq:hover {
+    fill: var(--yellow);
+  }
+  .coverage-map .state.active {
+    fill: var(--yellow) !important;
+  }
+  .coverage-map .hq-marker {
+    fill: var(--white);
+    stroke: var(--yellow);
+    stroke-width: 2;
+    pointer-events: none;
+  }
+  .coverage-map .hq-pulse {
+    fill: var(--yellow);
+    opacity: 0;
+    animation: hqPulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes hqPulse {
+    0% { r: 4; opacity: 0.8; }
+    100% { r: 18; opacity: 0; }
+  }
+  .coverage-map .state-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    fill: rgba(255,255,255,0.8);
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    text-anchor: middle;
+    user-select: none;
+  }
+  .coverage-map .state-label.dim {
+    fill: rgba(255,255,255,0.15);
+  }
+
+  .coverage-tooltip {
+    position: absolute;
+    top: 0; left: 0;
+    background: var(--white);
+    color: var(--black);
+    padding: 14px 16px;
+    border-radius: 2px;
+    min-width: 200px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 12px));
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+  .coverage-tooltip.visible { opacity: 1; }
+  .coverage-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px; height: 12px;
+    background: var(--white);
+  }
+  .tip-state {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .tip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 4px 0;
+    font-size: 12px;
+  }
+  .tip-row span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tip-row strong {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tip-status { color: oklch(0.55 0.18 140); }
+
+  .coverage-loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .coverage-loading.hidden { display: none; }
+
+  .coverage-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .coverage-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.02);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .coverage-pill:hover,
+  .coverage-pill.active {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+  }
+  .coverage-pill.hq::before {
+    content: "★";
+    margin-right: 6px;
+    color: var(--yellow);
+  }
+  .coverage-pill.active.hq::before { color: var(--black); }
+
+  @media (max-width: 960px) {
+    .coverage-header { grid-template-columns: 1fr; gap: 32px; }
+    .coverage-stats { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .coverage-stat-num { font-size: 40px; }
+    .coverage-map-wrap { padding: 16px; }
+    .coverage-legend { flex-wrap: wrap; gap: 12px; font-size: 9px; }
+  }
+
+  /* ============ CLIENTS ============ */
+  .clients {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+  .clients-header { text-align: center; margin-bottom: 64px; }
+  .clients-header .section-label { justify-content: center; }
+  .clients-header h2 { margin: 0 auto 16px; }
+  .clients-header p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 48ch;
+    margin: 0 auto;
+  }
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 24px 32px;
+    align-items: center;
+    justify-items: center;
+  }
+  .client-cell {
+    width: 100%;
+    aspect-ratio: 5/3;
+    display: grid;
+    place-items: center;
+    padding: 12px;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+  .client-cell:hover { transform: translateY(-2px); }
+  .client-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: #b8b8b8;
+    transition: color 0.3s ease;
+    letter-spacing: -0.01em;
+    text-align: center;
+    line-height: 1.25;
+  }
+  .client-cell:hover .client-mark { color: var(--black); }
+  .client-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.95;
+  }
+  .client-cell:hover .client-logo {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  /* ============ CONTACT ============ */
+  .contact {
+    background: var(--light-gray);
+    border-top: 1px solid var(--border);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left h2 {
+    font-size: clamp(40px, 4.6vw, 60px);
+    max-width: 12ch;
+    margin-bottom: 24px;
+  }
+  .contact-left > p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    max-width: 42ch;
+    margin-bottom: 48px;
+  }
+  .contact-info {
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .contact-info-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .contact-info-item .icon {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    background: var(--black);
+    color: var(--yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .contact-info-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .contact-info-item .value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .contact-form {
+    background: var(--white);
+    padding: 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .form-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .form-head h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .form-head .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    padding: 6px 10px;
+    border: 1px solid var(--yellow);
+    border-radius: 2px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-field {
+    margin-bottom: 16px;
+  }
+  .form-field label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--white);
+    color: var(--black);
+    transition: border-color 0.2s ease;
+    outline: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--black);
+  }
+  .form-field.error input, .form-field.error textarea {
+    border-color: #c92a2a;
+  }
+  .form-field .err-msg {
+    display: none;
+    color: #c92a2a;
+    font-size: 12px;
+    margin-top: 6px;
+  }
+  .form-field.error .err-msg { display: block; }
+  .form-field textarea { min-height: 120px; resize: vertical; }
+  .form-submit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 30ch;
+  }
+  .form-success {
+    display: none;
+    padding: 24px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 2px;
+    margin-top: 16px;
+    align-items: center;
+    gap: 16px;
+  }
+  .form-success.show { display: flex; }
+  .form-success .check {
+    width: 32px; height: 32px;
+    background: var(--yellow);
+    color: var(--black);
+    display: grid; place-items: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 96px 0 32px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 64px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--medium-gray);
+  }
+  .footer-about p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 20px;
+    max-width: 36ch;
+  }
+  .footer-about .logo { color: var(--white); }
+  .footer h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .footer ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  .footer a:hover { color: var(--yellow); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+  }
+  .footer-bottom-right { display: flex; gap: 24px; }
+  .footer-marquee {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(80px, 14vw, 200px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    color: var(--medium-gray);
+    line-height: 1;
+    padding: 48px 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--medium-gray);
+    position: relative;
+  }
+  .footer-marquee-inner {
+    display: inline-flex;
+    animation: marquee 40s linear infinite;
+    gap: 48px;
+  }
+  .footer-marquee span { display: inline-block; }
+  .footer-marquee .dot { color: var(--yellow); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============ SCROLL FADE ============ */
+  .fade {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============ TABLET (1100 - 961) ============ */
+  @media (max-width: 1100px) and (min-width: 961px) {
+    .container { padding: 0 32px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .service-card.feat { grid-column: span 2; }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .clients-grid { grid-template-columns: repeat(7, 1fr); gap: 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 48px; }
+    .about-grid { gap: 48px; }
+    .services-header, .values-header { gap: 48px; }
+    .contact-grid { gap: 48px; }
+    .stat-num { font-size: 56px; }
+  }
+
+  /* ============ MOBILE (≤960) ============ */
+  @media (max-width: 960px) {
+    .nav { display: none; }
+    .hero-meta { display: none; }
+    .hero-placeholder-label { display: none; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat { padding: 32px 24px; }
+    .stat-num { font-size: 56px; }
+    .about-grid, .services-header, .values-header, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid, .projects-grid, .values-grid, .footer-top { grid-template-columns: 1fr; }
+    .about-highlights { grid-template-columns: 1fr; }
+    .about-highlight { padding: 20px 0; border-top: 1px solid var(--border); }
+    .about-highlight:first-child { border-top: none; }
+    .value-card { border-right: none; border-bottom: 1px solid var(--medium-gray); padding: 40px 0; }
+    .value-card:not(:first-child) { padding-left: 0; }
+    .value-card .value-num { top: 24px; }
+    .clients-grid { grid-template-columns: repeat(5, 1fr); gap: 16px 20px; }
+    .service-card.feat { grid-column: span 1; }
+    .service-card.feat h3 { font-size: 24px; }
+    .container { padding: 0 20px; }
+    .section-pad { padding: 72px 0; }
+    .contact-form { padding: 28px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero { min-height: auto; padding: 120px 0 72px; }
+    .hero-buttons { flex-wrap: wrap; gap: 10px; }
+    .hero-buttons .btn { flex: 1 1 auto; justify-content: center; }
+    .projects-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .project-filters { flex-wrap: wrap; gap: 6px; }
+    .project-card .project-img { aspect-ratio: 4/3; }
+    .coverage-header { gap: 24px; }
+    .coverage-map-wrap { padding: 14px; }
+    .coverage-legend { flex-wrap: wrap; gap: 10px 16px; font-size: 9px; margin-bottom: 12px; }
+    .coverage-pills { gap: 6px; margin-top: 18px; padding-top: 18px; }
+    .coverage-pill { font-size: 9px; padding: 5px 10px; letter-spacing: 0.1em; }
+    .coverage-tooltip { min-width: 170px; padding: 12px 14px; }
+    .tip-state { font-size: 16px; }
+    .footer-top { gap: 40px; padding-bottom: 48px; }
+    .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .footer-marquee { font-size: clamp(56px, 18vw, 120px); }
+    .header-inner { padding: 16px 0; }
+    .contact-info { grid-template-columns: 1fr; gap: 16px; }
+    .form-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+
+  /* ============ SMALL PHONES (≤480) ============ */
+  @media (max-width: 480px) {
+    .container { padding: 0 16px; }
+    .section-pad { padding: 56px 0; }
+    .hero { padding: 100px 0 56px; }
+    .hero-sub { font-size: 16px; }
+    .stat-num { font-size: 44px; }
+    .stat-label { font-size: 13px; }
+    .about-right p { font-size: 15px; }
+    .service-card { padding: 28px 22px; }
+    .service-card h3 { font-size: 20px; }
+    .service-card.feat h3 { font-size: 22px; }
+    .project-info h3 { font-size: 18px; }
+    .value-card h3 { font-size: 26px; }
+    .clients-grid { grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
+    .contact-form { padding: 20px; }
+    .btn { font-size: 13px; padding: 11px 18px; }
+    .btn-lg { font-size: 14px; padding: 14px 22px; }
+    .coverage-pill { font-size: 8.5px; padding: 4px 9px; }
+    .coverage-map-wrap { padding: 10px; }
+    .coverage-tooltip { min-width: 150px; padding: 10px 12px; }
+    .tweaks-panel { width: calc(100vw - 24px); right: 12px; bottom: 12px; }
+  }
+
+  /* ============ TWEAKS PANEL ============ */
+  .tweaks-panel {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 320px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 30px 60px -12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: none;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-head {
+    background: var(--black);
+    color: var(--white);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tweaks-head h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tweaks-head h3::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--yellow);
+    border-radius: 50%;
+  }
+  .tweaks-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .tweak-group {
+    margin-bottom: 24px;
+  }
+  .tweak-group:last-child { margin-bottom: 0; }
+  .tweak-group label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .tweak-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tweak-chip {
+    padding: 8px 12px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    font-family: inherit;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+  .tweak-chip:hover { border-color: var(--black); }
+  .tweak-chip.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  .tweak-swatches { display: flex; gap: 8px; }
+  .tweak-swatch {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    transition: transform 0.2s ease;
+  }
+  .tweak-swatch.active {
+    border-color: var(--black);
+    transform: scale(1.1);
+  }
+
+  /* ============ PRINT ============ */
+  @page { size: letter; margin: 0.5in; }
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { overflow: visible !important; background: #fff !important; }
+    body { font-size: 10pt; }
+
+    /* Kill fixed/interactive chrome */
+    .header { position: static !important; background: #fff !important; border-bottom: 1px solid var(--border) !important; }
+    .header.scrolled .nav a, .nav a { color: #000 !important; opacity: 1 !important; }
+    .header .logo .wordmark, .header .logo .peak-black { fill: #000 !important; }
+    .header-inner { height: auto !important; padding: 12px 0; }
+    .nav { position: static !important; transform: none !important; gap: 20px !important; }
+    .fade { opacity: 1 !important; transform: none !important; }
+    .footer-marquee { display: none !important; }
+    .coverage-tooltip, .coverage-loading { display: none !important; }
+    .projects-filters { display: none !important; }
+
+    /* Hero — shrink, no fixed min-height */
+    .hero { min-height: auto !important; height: auto !important; padding: 48px 0 32px !important; page-break-after: always; break-after: page; }
+    .hero-bg, .hero-grid-lines { position: absolute !important; }
+    .hero-meta { display: none !important; }
+    .hero-placeholder-label { display: none !important; }
+
+    /* Section padding reductions */
+    .section-pad { padding: 32px 0 !important; }
+
+    /* Page breaks between major sections */
+    .about, .services, .projects, .values, .coverage, .clients, .contact, .footer {
+      page-break-before: auto;
+      break-before: auto;
+    }
+    .services, .projects, .values, .coverage, .clients, .contact {
+      page-break-before: page;
+      break-before: page;
+    }
+
+    /* Avoid splitting cards, images, form blocks */
+    .service-card, .project-card, .value-card, .about-highlight, .client-cell,
+    .contact-form, .form-group, .about-image, .coverage-map-wrap {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Grids collapse to safer column counts for print */
+    .projects-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+    .services-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+    .clients-grid { grid-template-columns: repeat(6, 1fr) !important; gap: 12px 16px !important; }
+    .values-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 16px !important; }
+    .footer-top { grid-template-columns: repeat(4, 1fr) !important; gap: 16px !important; }
+
+    /* Constrain image/card heights so a card fits on page */
+    .project-card .project-image { aspect-ratio: 16/10 !important; }
+    .about-image { aspect-ratio: 16/8 !important; }
+    .coverage-map { height: 420px !important; min-height: 0 !important; }
+
+    /* Headings — slightly smaller so they don't eat the page */
+    h1.display { font-size: 48pt !important; line-height: 1.02 !important; }
+    h2.display { font-size: 28pt !important; line-height: 1.05 !important; }
+    h3, h4 { page-break-after: avoid; break-after: avoid; }
+
+    /* Footer */
+    .footer { page-break-before: auto; break-before: auto; padding: 32px 0 !important; }
+    .footer-bottom { padding: 16px 0 !important; }
+
+    /* Disable animations */
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Ensure dark sections keep their bg */
+    .values, .footer, .hero { background: #000 !important; color: #fff !important; }
+
+    a { text-decoration: none !important; color: inherit !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="#home" class="logo" aria-label="Covenant Construction">
+      <svg viewBox="0 0 1180 277" xmlns="http://www.w3.org/2000/svg">
+        <path class="peak-black" d="M98.596 6L216.596 185V252L95.096 68.5L50.596 114L73.096 174V276L0.596008 85.5L98.596 6Z"/>
+        <path d="M72.596 277V110L273.596 0V277H213.096V84L124.096 133V277H72.596Z" fill="#F1C231"/>
+        <path class="wordmark" d="M1171.4 225.884V163.324H1179.78V239.676H1171.51L1123.73 177.116V239.676H1115.35V163.324H1123.62L1171.4 225.884Z"/>
+        <path class="wordmark" d="M1062.17 162H1062.28C1085.78 162 1101.01 177.999 1101.01 201.39V201.5C1101.01 225.001 1085.78 241 1062.28 241H1062.17C1038.67 241 1023.33 225.001 1023.33 201.5V201.39C1023.33 177.999 1038.67 162 1062.17 162ZM1062.17 233.056H1062.28C1080.49 233.056 1092.51 220.367 1092.51 201.5V201.39C1092.51 182.633 1080.49 169.944 1062.28 169.944H1062.17C1043.85 169.944 1031.83 182.633 1031.83 201.39V201.5C1031.83 220.367 1043.85 233.056 1062.17 233.056Z"/>
+        <path class="wordmark" d="M1008.98 239.676H1000.49V163.324H1008.98V239.676Z"/>
+        <path class="wordmark" d="M928.146 163.324H988.058V171.489H962.35V239.676H953.854V171.489H928.146V163.324Z"/>
+        <path class="wordmark" d="M921.714 170.275L916.969 176.675C911.453 172.151 904.281 169.944 896.557 169.944H896.447C878.462 169.944 866.325 183.074 866.325 201.39V201.5C866.436 220.036 878.462 233.056 896.447 233.056H896.557C904.612 233.056 911.563 230.739 916.969 226.325L921.714 232.725C914.652 238.573 906.267 241 896.557 241H896.447C872.946 241 857.83 225.112 857.83 201.5V201.39C857.83 177.888 872.946 162 896.447 162H896.557C905.825 162 914.542 164.317 921.714 170.275Z"/>
+        <path class="wordmark" d="M836.804 206.134V163.324H845.3V206.134C845.3 230.959 830.736 241 812.861 241H812.751C794.877 241 780.312 230.959 780.312 206.134V163.324H788.808V206.134C788.808 225.663 800.393 232.725 812.751 232.725H812.861C825.219 232.725 836.804 225.663 836.804 206.134Z"/>
+        <path class="wordmark" d="M748.319 211.54L768.4 239.676H758.911L740.043 212.754H737.837H716.873V239.676H708.377V163.324H737.837C756.483 163.324 766.634 173.254 766.634 188.37V188.48C766.634 200.176 760.235 208.561 748.319 211.54ZM737.837 171.047H716.873V205.362H737.837C750.967 205.362 758.138 198.962 758.138 188.48V188.37C758.138 177.557 750.967 171.047 737.837 171.047Z"/>
+        <path class="wordmark" d="M636.038 163.324H695.95V171.489H670.242V239.676H661.746V171.489H636.038V163.324Z"/>
+        <path class="wordmark" d="M628.055 176.785L622.869 182.743C619.339 174.799 612.056 169.613 600.471 169.613H600.361C587.783 169.613 580.721 174.578 580.721 181.971C580.721 187.156 583.811 192.011 593.741 194.549L611.615 198.962C625.407 202.272 629.158 211.209 629.158 220.257C629.158 232.725 618.456 241 600.692 241H600.582C584.914 241 573.991 234.601 569.467 223.126L576.528 218.271C580.611 228.532 588.886 233.387 600.802 233.387H600.913C613.711 233.387 620.552 227.98 620.552 220.147C620.552 214.078 617.242 208.892 608.084 206.575L589.217 201.721C576.639 198.411 572.115 190.797 572.115 182.191C572.115 169.613 582.707 162 600.692 162H600.802C614.484 162 623.973 167.737 628.055 176.785Z"/>
+        <path class="wordmark" d="M547.852 225.884V163.324H556.237V239.676H547.962L500.187 177.116V239.676H491.801V163.324H500.076L547.852 225.884Z"/>
+        <path class="wordmark" d="M438.626 162H438.736C462.238 162 477.464 177.999 477.464 201.39V201.5C477.464 225.001 462.238 241 438.736 241H438.626C415.125 241 399.788 225.001 399.788 201.5V201.39C399.788 177.999 415.125 162 438.626 162ZM438.626 233.056H438.736C456.942 233.056 468.968 220.367 468.968 201.5V201.39C468.968 182.633 456.942 169.944 438.736 169.944H438.626C420.31 169.944 408.284 182.633 408.284 201.39V201.5C408.284 220.367 420.31 233.056 438.626 233.056Z"/>
+        <path class="wordmark" d="M391.48 170.275L386.736 176.675C381.219 172.151 374.047 169.944 366.324 169.944H366.213C348.229 169.944 336.092 183.074 336.092 201.39V201.5C336.202 220.036 348.229 233.056 366.213 233.056H366.324C374.378 233.056 381.329 230.739 386.736 226.325L391.48 232.725C384.419 238.573 376.033 241 366.324 241H366.213C342.712 241 327.596 225.112 327.596 201.5V201.39C327.596 177.888 342.712 162 366.213 162H366.324C375.592 162 384.308 164.317 391.48 170.275Z"/>
+        <path class="wordmark" d="M997.066 44.324H1060.18V63.412H1038.55V120.676H1018.69V63.412H997.066V44.324Z"/>
+        <path class="wordmark" d="M968.499 86.3617V44.324H987.808V120.676H970.485L938.488 78.7485V120.676H919.18V44.324H936.502L968.499 86.3617Z"/>
+        <path class="wordmark" d="M880.804 44.324L911.036 120.676H890.072L884.997 106.332H855.206L850.131 120.676H829.167L859.399 44.324H880.804ZM878.707 88.8994L870.101 64.736L861.495 88.8994H878.707Z"/>
+        <path class="wordmark" d="M801.704 86.3617V44.324H821.012V120.676H803.69L771.693 78.7485V120.676H752.384V44.324H769.707L801.704 86.3617Z"/>
+        <path class="wordmark" d="M686.765 44.324H739.836V62.8603H706.625V73.2318H735.422V91.7681H706.625V102.14H739.836V120.676H686.765V44.324Z"/>
+        <path class="wordmark" d="M622.028 44.324L639.792 96.2918L657.556 44.324H678.52L650.495 120.676H629.09L601.064 44.324H622.028Z"/>
+        <path class="wordmark" d="M557.641 43H557.752C582.577 43 597.252 59.5503 597.252 82.3897V82.5C597.252 105.45 582.577 122 557.752 122H557.641C532.816 122 518.141 105.45 518.141 82.5V82.3897C518.141 59.5503 532.816 43 557.641 43ZM557.641 103.464H557.752C570.109 103.464 577.391 94.6369 577.391 82.5V82.3897C577.391 70.3631 570.109 61.5363 557.752 61.5363H557.641C545.284 61.5363 538.002 70.3631 538.002 82.3897V82.5C538.002 94.6369 545.284 103.464 557.641 103.464Z"/>
+        <path class="wordmark" d="M513.79 52.7095L502.867 67.6047C498.012 63.412 492.495 61.5363 486.206 61.5363H486.096C473.738 61.5363 466.456 70.8045 466.456 82.3897V82.5C466.677 94.3059 473.849 103.464 486.096 103.464H486.206C493.488 103.464 498.454 101.147 502.867 97.3952L513.79 112.29C507.06 118.58 497.792 122 486.206 122H486.096C461.271 122 446.596 105.45 446.596 82.5V82.3897C446.596 59.5503 461.271 43 486.096 43H486.206C496.688 43 506.618 45.979 513.79 52.7095Z"/>
+      </svg>
+    </a>
+    <nav class="nav">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-primary">
+      Contact Us
+      <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-placeholder-label">— Construction Site Imagery —</div>
+
+  <div class="hero-meta">
+    <div>Established<br/><strong>2026</strong></div>
+    <div style="margin-top:16px">Licensed &amp; Insured<br/><strong>FL / GA / TX</strong></div>
+  </div>
+
+  <div class="container hero-content">
+    <div class="hero-eyebrow">Commercial Construction · Est. 2026</div>
+    <h1 class="display">
+      Building More Than<br/>a <span class="accent">Bond</span>.
+    </h1>
+    <p class="hero-sub">
+      Covenant Construction delivers high quality commercial construction, design,
+      and project execution with a focus on trust, precision, and long term partnerships.
+    </p>
+    <div class="hero-buttons">
+      <a href="#services" class="btn btn-primary btn-lg">
+        Our Services
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#projects" class="btn btn-secondary btn-lg">View Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<div class="stats">
+  <div class="stats-grid fade">
+    <div class="stat-card">
+      <div class="stat-num" data-target="65">0<span class="plus">+</span></div>
+      <div class="stat-label">Years of experience delivering commercial projects</div>
+      <div class="stat-tag"><span>01 / Experience</span><span>Since '61</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="100">0<span class="plus">+</span></div>
+      <div class="stat-label">Projects completed across multiple industries</div>
+      <div class="stat-tag"><span>02 / Delivered</span><span>Nationwide</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="50">0<span class="plus">+</span></div>
+      <div class="stat-label">Dedicated employees from design through build</div>
+      <div class="stat-tag"><span>03 / Team</span><span>In-house</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="about-grid fade">
+      <div class="about-left">
+        <div class="section-label">About</div>
+        <h2 class="display">Built on Trust.<br/>Backed by Experience.</h2>
+      </div>
+      <div class="about-right">
+        <p>Covenant Construction is a full service construction partner focused on delivering high quality projects from concept through completion. Our team brings deep experience across planning, engineering, and execution, ensuring every project is delivered with precision.</p>
+        <p>We work closely with clients to build more than structures. We build trust through communication, accountability, and consistent execution. From early stage design to final build, our focus stays on quality, efficiency, and long term value.</p>
+      </div>
+    </div>
+
+    <div class="about-image fade">
+      <div class="about-image-label">
+        <span>[ Project imagery · site walk-through ]</span>
+        <span>COV-01 / JOBSITE</span>
+      </div>
+    </div>
+
+    <div class="about-highlights fade">
+      <div class="about-highlight">
+        <span class="num">01 / SCOPE</span>
+        <h4>Concept to completion</h4>
+        <p>Integrated planning, design coordination, and build under one partner.</p>
+      </div>
+      <div class="about-highlight">
+        <span class="num">02 / PROCESS</span>
+        <h4>Transparent execution</h4>
+        <p>Weekly reporting, clear budgets, and accountable schedules on every project.</p>
+      </div>
+      <div class="about-highlight">
+        <span class="num">03 / PARTNERSHIP</span>
+        <h4>Relationship driven</h4>
+        <p>Repeat clients across retail, hospitality, and specialty sectors for over six decades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services section-pad" id="services">
+  <div class="container">
+    <div class="services-header fade">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="display section-heading">A single partner, from scope to handoff.</h2>
+      </div>
+      <p>Five disciplined services delivered by the same in-house team. No handoffs, no finger pointing — one accountable partner from the first drawing to the final walk-through.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Featured: General Contracting -->
+      <div class="service-card feat fade">
+        <div class="service-num">04 — FLAGSHIP</div>
+        <div class="service-icon" style="background:var(--yellow); color:var(--black); border-color:var(--yellow);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg>
+        </div>
+        <h3>General Contracting</h3>
+        <p>Full build execution with experienced teams and proven processes across all phases — from site mobilization through punch list and closeout.</p>
+        <div class="service-link">Learn more <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="service-card fade">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z M3 9h18 M9 21V9"/></svg>
+        </div>
+        <h3>Planning &amp; Design</h3>
+        <p>Early stage planning that sets projects up for success with clear scope, timelines, and execution strategy.</p>
+        <div class="service-link">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="service-card fade">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18 M6 20V10l6-6 6 6v10 M10 20v-6h4v6"/></svg>
+        </div>
+        <h3>Value Engineering</h3>
+        <p>Cost optimization without sacrificing quality, ensuring efficient use of materials and resources.</p>
+        <div class="service-link">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="service-card fade">
+        <div class="service-num">03</div>
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>Project Management</h3>
+        <p>End to end oversight to keep projects on track, on budget, and aligned with expectations.</p>
+        <div class="service-link">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="service-card fade">
+        <div class="service-num">05</div>
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4z M4 12h10v4H4z M4 20h14"/></svg>
+        </div>
+        <h3>Conceptual Estimating</h3>
+        <p>Accurate early estimates to guide decisions and reduce surprises later in the project.</p>
+        <div class="service-link">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="projects section-pad" id="projects">
+  <div class="container">
+    <div class="projects-header fade">
+      <div>
+        <div class="section-label">Featured Projects</div>
+        <h2 class="display section-heading">A selection of recent builds.</h2>
+        <p class="sub">A selection of projects delivered across multiple industries and locations.</p>
+      </div>
+      <div class="projects-filters" id="projectFilters">
+        <button class="filter-chip active" data-filter="all">All · 15</button>
+        <button class="filter-chip" data-filter="food">Food &amp; Bev</button>
+        <button class="filter-chip" data-filter="retail">Retail</button>
+        <button class="filter-chip" data-filter="wellness">Wellness</button>
+        <button class="filter-chip" data-filter="entertainment">Entertainment</button>
+      </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid"></div>
+
+    <div class="projects-footer fade">
+      <div class="projects-count" id="projectsCount">Showing 15 of 15 projects</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUES ============ -->
+<section class="values section-pad">
+  <div class="container">
+    <div class="values-header fade">
+      <div>
+        <div class="section-label light">Core Values</div>
+        <h2 class="display values-headline">Three principles we refuse to compromise on.</h2>
+      </div>
+      <p>Every project runs through the same operating standards — the reason our clients come back build after build, decade after decade.</p>
+    </div>
+    <div class="values-grid fade">
+      <div class="value-card">
+        <span class="value-num">/ 01</span>
+        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="9" cy="8" r="3"/>
+          <circle cx="17" cy="10" r="2.5"/>
+          <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6 M14 20c0-2.5 1.8-4.5 4-4.5"/>
+        </svg>
+        <h3>Teamwork</h3>
+        <p>We collaborate across every phase to deliver aligned results.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">/ 02</span>
+        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/>
+          <path d="M8.5 12l2.5 2.5 4.5-4.5"/>
+        </svg>
+        <h3>Integrity</h3>
+        <p>We operate with transparency and accountability in every project.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">/ 03</span>
+        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 2v4 M12 18v4 M4.9 4.9l2.8 2.8 M16.3 16.3l2.8 2.8 M2 12h4 M18 12h4 M4.9 19.1l2.8-2.8 M16.3 7.7l2.8-2.8"/>
+          <circle cx="12" cy="12" r="3.5"/>
+        </svg>
+        <h3>Commitment</h3>
+        <p>We stay focused on delivering quality work, on time and on budget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COVERAGE MAP ============ -->
+<section class="coverage section-pad" id="coverage">
+  <div class="container">
+    <div class="coverage-header fade">
+      <div class="coverage-header-left">
+        <div class="section-label">Where We Build</div>
+        <h2 class="display section-heading" style="margin: 0 0 16px;">Licensed & active across 18 states.</h2>
+        <p class="coverage-sub">Covenant holds active general contractor licensing, insurance, and bonding across the Eastern seaboard. Hover any highlighted state for project count and metro coverage.</p>
+      </div>
+    </div>
+
+    <div class="coverage-map-wrap fade">
+      <div class="coverage-legend">
+        <div class="legend-item"><span class="legend-dot licensed"></span>Licensed & Active</div>
+        <div class="legend-item"><span class="legend-dot hq"></span>Headquarters</div>
+        <div class="legend-item"><span class="legend-dot inactive"></span>Coming Soon</div>
+      </div>
+      <div class="coverage-map" id="coverageMap">
+        <svg id="usMap" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" aria-label="US coverage map"></svg>
+        <div class="coverage-tooltip" id="coverageTip" aria-hidden="true">
+          <div class="tip-state">—</div>
+          <div class="tip-body">
+            <div class="tip-row"><span>Status</span><strong class="tip-status">—</strong></div>
+            <div class="tip-row"><span>Projects</span><strong class="tip-projects">—</strong></div>
+            <div class="tip-row"><span>Coverage</span><strong class="tip-metro">—</strong></div>
+          </div>
+        </div>
+        <div class="coverage-loading" id="coverageLoading">Loading map…</div>
+      </div>
+
+      <div class="coverage-pills" id="coveragePills"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTS ============ -->
+<section class="clients section-pad">
+  <div class="container">
+    <div class="clients-header fade">
+      <div class="section-label">Our Clients</div>
+      <h2 class="display section-heading" style="margin: 0 auto 16px;">Trusted by brands across the U.S.</h2>
+      <p>A selection of operators and franchise groups that have partnered with Covenant on multiple builds.</p>
+    </div>
+    <div class="clients-grid fade" id="clientsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="contact-grid fade">
+      <div class="contact-left">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="display">Start Your Next Project.</h2>
+        <p>Connect with Covenant Construction to discuss your project, timeline, and goals. A senior team member will respond within one business day.</p>
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <div class="icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.4 2.1L8 9.8a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2z"/></svg>
+            </div>
+            <div>
+              <div class="label">Phone</div>
+              <div class="value">(954) 555 — 0161</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </div>
+            <div>
+              <div class="label">Email</div>
+              <div class="value">projects@covenantbuilds.com</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="label">Headquarters</div>
+              <div class="value">Fort Lauderdale, FL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-head">
+          <h3>Project Inquiry</h3>
+          <span class="tag">RESPONSE · 24H</span>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe" />
+            <div class="err-msg">Please enter your name.</div>
+          </div>
+          <div class="form-field">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company Inc." />
+            <div class="err-msg"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" />
+            <div class="err-msg">Please enter a valid email.</div>
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" />
+            <div class="err-msg"></div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="details">Project Details *</label>
+          <textarea id="details" name="details" placeholder="Tell us about scope, timeline, location, and budget range."></textarea>
+          <div class="err-msg">Please share some project context.</div>
+        </div>
+        <div class="form-submit">
+          <p class="form-note">By submitting, you'll connect with our preconstruction team.</p>
+          <button type="submit" class="btn btn-primary btn-lg">
+            Send Inquiry
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="check">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+          </div>
+          <div>
+            <strong style="display:block; margin-bottom:2px;">Inquiry received.</strong>
+            <span style="font-size:13px; color:rgba(255,255,255,0.7);">A senior team member will reach out within 24 hours.</span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-marquee">
+    <div class="footer-marquee-inner">
+      <span>Building More Than a Bond</span><span class="dot">✦</span>
+      <span>Building More Than a Bond</span><span class="dot">✦</span>
+      <span>Building More Than a Bond</span><span class="dot">✦</span>
+      <span>Building More Than a Bond</span><span class="dot">✦</span>
+    </div>
+  </div>
+  <div class="container" style="padding-top: 64px;">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a href="#home" class="logo" aria-label="Covenant Construction" style="margin-bottom:20px;">
+          <svg viewBox="0 0 1180 277" xmlns="http://www.w3.org/2000/svg">
+            <path class="peak-black" d="M98.596 6L216.596 185V252L95.096 68.5L50.596 114L73.096 174V276L0.596008 85.5L98.596 6Z"/>
+            <path d="M72.596 277V110L273.596 0V277H213.096V84L124.096 133V277H72.596Z" fill="#F1C231"/>
+            <path class="wordmark" d="M1171.4 225.884V163.324H1179.78V239.676H1171.51L1123.73 177.116V239.676H1115.35V163.324H1123.62L1171.4 225.884Z"/>
+            <path class="wordmark" d="M1062.17 162H1062.28C1085.78 162 1101.01 177.999 1101.01 201.39V201.5C1101.01 225.001 1085.78 241 1062.28 241H1062.17C1038.67 241 1023.33 225.001 1023.33 201.5V201.39C1023.33 177.999 1038.67 162 1062.17 162ZM1062.17 233.056H1062.28C1080.49 233.056 1092.51 220.367 1092.51 201.5V201.39C1092.51 182.633 1080.49 169.944 1062.28 169.944H1062.17C1043.85 169.944 1031.83 182.633 1031.83 201.39V201.5C1031.83 220.367 1043.85 233.056 1062.17 233.056Z"/>
+            <path class="wordmark" d="M1008.98 239.676H1000.49V163.324H1008.98V239.676Z"/>
+            <path class="wordmark" d="M928.146 163.324H988.058V171.489H962.35V239.676H953.854V171.489H928.146V163.324Z"/>
+            <path class="wordmark" d="M921.714 170.275L916.969 176.675C911.453 172.151 904.281 169.944 896.557 169.944H896.447C878.462 169.944 866.325 183.074 866.325 201.39V201.5C866.436 220.036 878.462 233.056 896.447 233.056H896.557C904.612 233.056 911.563 230.739 916.969 226.325L921.714 232.725C914.652 238.573 906.267 241 896.557 241H896.447C872.946 241 857.83 225.112 857.83 201.5V201.39C857.83 177.888 872.946 162 896.447 162H896.557C905.825 162 914.542 164.317 921.714 170.275Z"/>
+            <path class="wordmark" d="M836.804 206.134V163.324H845.3V206.134C845.3 230.959 830.736 241 812.861 241H812.751C794.877 241 780.312 230.959 780.312 206.134V163.324H788.808V206.134C788.808 225.663 800.393 232.725 812.751 232.725H812.861C825.219 232.725 836.804 225.663 836.804 206.134Z"/>
+            <path class="wordmark" d="M748.319 211.54L768.4 239.676H758.911L740.043 212.754H737.837H716.873V239.676H708.377V163.324H737.837C756.483 163.324 766.634 173.254 766.634 188.37V188.48C766.634 200.176 760.235 208.561 748.319 211.54ZM737.837 171.047H716.873V205.362H737.837C750.967 205.362 758.138 198.962 758.138 188.48V188.37C758.138 177.557 750.967 171.047 737.837 171.047Z"/>
+            <path class="wordmark" d="M636.038 163.324H695.95V171.489H670.242V239.676H661.746V171.489H636.038V163.324Z"/>
+            <path class="wordmark" d="M628.055 176.785L622.869 182.743C619.339 174.799 612.056 169.613 600.471 169.613H600.361C587.783 169.613 580.721 174.578 580.721 181.971C580.721 187.156 583.811 192.011 593.741 194.549L611.615 198.962C625.407 202.272 629.158 211.209 629.158 220.257C629.158 232.725 618.456 241 600.692 241H600.582C584.914 241 573.991 234.601 569.467 223.126L576.528 218.271C580.611 228.532 588.886 233.387 600.802 233.387H600.913C613.711 233.387 620.552 227.98 620.552 220.147C620.552 214.078 617.242 208.892 608.084 206.575L589.217 201.721C576.639 198.411 572.115 190.797 572.115 182.191C572.115 169.613 582.707 162 600.692 162H600.802C614.484 162 623.973 167.737 628.055 176.785Z"/>
+            <path class="wordmark" d="M547.852 225.884V163.324H556.237V239.676H547.962L500.187 177.116V239.676H491.801V163.324H500.076L547.852 225.884Z"/>
+            <path class="wordmark" d="M438.626 162H438.736C462.238 162 477.464 177.999 477.464 201.39V201.5C477.464 225.001 462.238 241 438.736 241H438.626C415.125 241 399.788 225.001 399.788 201.5V201.39C399.788 177.999 415.125 162 438.626 162ZM438.626 233.056H438.736C456.942 233.056 468.968 220.367 468.968 201.5V201.39C468.968 182.633 456.942 169.944 438.736 169.944H438.626C420.31 169.944 408.284 182.633 408.284 201.39V201.5C408.284 220.367 420.31 233.056 438.626 233.056Z"/>
+            <path class="wordmark" d="M391.48 170.275L386.736 176.675C381.219 172.151 374.047 169.944 366.324 169.944H366.213C348.229 169.944 336.092 183.074 336.092 201.39V201.5C336.202 220.036 348.229 233.056 366.213 233.056H366.324C374.378 233.056 381.329 230.739 386.736 226.325L391.48 232.725C384.419 238.573 376.033 241 366.324 241H366.213C342.712 241 327.596 225.112 327.596 201.5V201.39C327.596 177.888 342.712 162 366.213 162H366.324C375.592 162 384.308 164.317 391.48 170.275Z"/>
+            <path class="wordmark" d="M997.066 44.324H1060.18V63.412H1038.55V120.676H1018.69V63.412H997.066V44.324Z"/>
+            <path class="wordmark" d="M968.499 86.3617V44.324H987.808V120.676H970.485L938.488 78.7485V120.676H919.18V44.324H936.502L968.499 86.3617Z"/>
+            <path class="wordmark" d="M880.804 44.324L911.036 120.676H890.072L884.997 106.332H855.206L850.131 120.676H829.167L859.399 44.324H880.804ZM878.707 88.8994L870.101 64.736L861.495 88.8994H878.707Z"/>
+            <path class="wordmark" d="M801.704 86.3617V44.324H821.012V120.676H803.69L771.693 78.7485V120.676H752.384V44.324H769.707L801.704 86.3617Z"/>
+            <path class="wordmark" d="M686.765 44.324H739.836V62.8603H706.625V73.2318H735.422V91.7681H706.625V102.14H739.836V120.676H686.765V44.324Z"/>
+            <path class="wordmark" d="M622.028 44.324L639.792 96.2918L657.556 44.324H678.52L650.495 120.676H629.09L601.064 44.324H622.028Z"/>
+            <path class="wordmark" d="M557.641 43H557.752C582.577 43 597.252 59.5503 597.252 82.3897V82.5C597.252 105.45 582.577 122 557.752 122H557.641C532.816 122 518.141 105.45 518.141 82.5V82.3897C518.141 59.5503 532.816 43 557.641 43ZM557.641 103.464H557.752C570.109 103.464 577.391 94.6369 577.391 82.5V82.3897C577.391 70.3631 570.109 61.5363 557.752 61.5363H557.641C545.284 61.5363 538.002 70.3631 538.002 82.3897V82.5C538.002 94.6369 545.284 103.464 557.641 103.464Z"/>
+            <path class="wordmark" d="M513.79 52.7095L502.867 67.6047C498.012 63.412 492.495 61.5363 486.206 61.5363H486.096C473.738 61.5363 466.456 70.8045 466.456 82.3897V82.5C466.677 94.3059 473.849 103.464 486.096 103.464H486.206C493.488 103.464 498.454 101.147 502.867 97.3952L513.79 112.29C507.06 118.58 497.792 122 486.206 122H486.096C461.271 122 446.596 105.45 446.596 82.5V82.3897C446.596 59.5503 461.271 43 486.096 43H486.206C496.688 43 506.618 45.979 513.79 52.7095Z"/>
+          </svg>
+        </a>
+        <p>High quality commercial construction, design, and project execution. Building trust through communication, accountability, and execution since 2026.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Planning &amp; Design</a></li>
+          <li><a href="#services">Value Engineering</a></li>
+          <li><a href="#services">Project Management</a></li>
+          <li><a href="#services">General Contracting</a></li>
+          <li><a href="#services">Conceptual Estimating</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:9545550161">(954) 555 — 0161</a></li>
+          <li><a href="mailto:projects@covenantbuilds.com">projects@covenantbuilds.com</a></li>
+          <li style="color: rgba(255,255,255,0.7); font-size: 14px;">Fort Lauderdale, FL<br/>Licensed FL / GA / TX</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 COVENANT CONSTRUCTION. ALL RIGHTS RESERVED.</span>
+      <div class="footer-bottom-right">
+        <a href="#">PRIVACY</a>
+        <a href="#">TERMS</a>
+        <a href="#">LICENSE INFO</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS PANEL ============ -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <div class="tweaks-head">
+    <h3>Tweaks</h3>
+    <button onclick="closeTweaks()" style="background:none;border:none;color:white;cursor:pointer;font-size:18px;">✕</button>
+  </div>
+  <div class="tweaks-body">
+    <div class="tweak-group">
+      <label>Accent Color</label>
+      <div class="tweak-swatches" id="accentSwatches">
+        <div class="tweak-swatch active" data-accent="#F1C231" style="background:#F1C231"></div>
+        <div class="tweak-swatch" data-accent="#FF6B35" style="background:#FF6B35"></div>
+        <div class="tweak-swatch" data-accent="#EF4444" style="background:#EF4444"></div>
+        <div class="tweak-swatch" data-accent="#10B981" style="background:#10B981"></div>
+        <div class="tweak-swatch" data-accent="#FFFFFF" style="background:#FFFFFF; border-color:#888"></div>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <label>Hero Headline</label>
+      <div class="tweak-chips" id="headlineChips">
+        <button class="tweak-chip active" data-headline="bond">Building More Than a Bond</button>
+        <button class="tweak-chip" data-headline="trust">Built on Trust</button>
+        <button class="tweak-chip" data-headline="precision">Precision Builds</button>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <label>Display Font</label>
+      <div class="tweak-chips" id="fontChips">
+        <button class="tweak-chip active" data-font="Space Grotesk">Space Grotesk</button>
+        <button class="tweak-chip" data-font="Archivo">Archivo</button>
+        <button class="tweak-chip" data-font="DM Sans">DM Sans</button>
+      </div>
+    </div>
+    <div class="tweak-group">
+      <label>Projects Layout</label>
+      <div class="tweak-chips" id="gridChips">
+        <button class="tweak-chip active" data-grid="3">3-up Grid</button>
+        <button class="tweak-chip" data-grid="4">4-up Grid</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // =========== TWEAK DEFAULTS (persisted) ===========
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accent": "#F1C231",
+    "headline": "bond",
+    "font": "Space Grotesk",
+    "grid": "3"
+  }/*EDITMODE-END*/;
+
+  // ============ HEADER SCROLL ============
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }, { passive: true });
+
+  // ============ SCROLL FADE-IN ============
+  const fadeEls = document.querySelectorAll('.fade');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => io.observe(el));
+
+  // ============ STAT COUNTERS ============
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        const plus = el.querySelector('.plus');
+        let cur = 0;
+        const dur = 1400;
+        const start = performance.now();
+        function tick(t) {
+          const p = Math.min(1, (t - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          cur = Math.round(target * eased);
+          el.childNodes[0].nodeValue = cur;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        statsObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => statsObserver.observe(el));
+
+  // ============ PROJECTS ============
+  const projects = [
+    { name: "Chicken Guy", location: "Winter Park, FL", type: "food", hue: 36, image: "project-images/chicken-guy.webp" },
+    { name: "Five Guys", location: "Pompano Beach, FL", type: "food", hue: 0, image: "project-images/five-guys.webp" },
+    { name: "The Puttery", location: "Miami, FL", type: "entertainment", hue: 150, image: "project-images/puttery.webp" },
+    { name: "Bar Italia", location: "Winter Park, FL", type: "food", hue: 20, image: "project-images/bar-italia.webp" },
+    { name: "BurgerFi", location: "Davie, FL", type: "food", hue: 48, image: "project-images/burgerfi.webp" },
+    { name: "Häagen-Dazs", location: "Brickell, FL", type: "food", hue: 340, image: "project-images/haagen-dazs.webp" },
+    { name: "Black Rock", location: "Coral Springs, FL", type: "food", hue: 0, dark: true, image: "project-images/black-rock.webp" },
+    { name: "House of Athletes", location: "Weston, FL", type: "wellness", hue: 200, image: "project-images/house-of-athletes.webp" },
+    { name: "Ellianos Coffee", location: "St. Cloud, FL", type: "food", hue: 28, image: "project-images/ellianos.jpg" },
+    { name: "Domino's", location: "Miami, FL", type: "food", hue: 220, image: "project-images/dominos-a.jpg" },
+    { name: "Stanton Optical", location: "Port Saint Lucie, FL", type: "retail", hue: 260, image: "project-images/stanton-optical.webp" },
+    { name: "Mint Cannabis", location: "Tampa, FL", type: "retail", hue: 140, image: "project-images/mint-cannabis.jpeg" },
+    { name: "SWTHZ", location: "Aventura, FL", type: "wellness", hue: 180, image: "project-images/swthz.jpg" },
+    { name: "Tee Box", location: "Hallandale Beach, FL", type: "entertainment", hue: 120, image: "project-images/tee-box.jpg" },
+    { name: "Zunzibar", location: "Middleton, FL", type: "food", hue: 50, image: "project-images/zunzibar.jpg" },
+  ];
+  const typeLabels = {
+    food: "FOOD & BEV",
+    retail: "RETAIL",
+    wellness: "WELLNESS",
+    entertainment: "ENTERTAINMENT"
+  };
+
+  function renderProjects(filter = 'all') {
+    const grid = document.getElementById('projectsGrid');
+    const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
+    grid.innerHTML = filtered.map((p, i) => {
+      const num = String(i+1).padStart(2,'0');
+      const bg = p.dark
+        ? `linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 100%)`
+        : `linear-gradient(135deg, oklch(0.32 0.08 ${p.hue}) 0%, oklch(0.18 0.06 ${p.hue}) 100%)`;
+      const stripes = `repeating-linear-gradient(${45 + i*7}deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 30px), repeating-linear-gradient(${-30 + i*5}deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 60px)`;
+      const imgStyle = p.image
+        ? `background: url('${p.image}') center/cover no-repeat;`
+        : `background: ${stripes}, ${bg};`;
+      return `
+      <article class="project-card" data-type="${p.type}">
+        <div class="project-img" style="${imgStyle}"></div>
+        <div class="project-overlay"></div>
+        <div class="project-number">CASE / ${num}</div>
+        <div class="project-info">
+          <div class="project-type">${typeLabels[p.type]}</div>
+          <h3>${p.name}</h3>
+          <div class="loc">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${p.location}
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+    document.getElementById('projectsCount').textContent = `Showing ${filtered.length} of ${projects.length} projects`;
+  }
+  renderProjects();
+
+  document.getElementById('projectFilters').addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-chip');
+    if (!btn) return;
+    document.querySelectorAll('#projectFilters .filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    renderProjects(btn.dataset.filter);
+  });
+
+  // ============ CLIENTS ============
+  const clientLogos = [
+    ["Chicken Guy!", "client-logos/Vector-1.svg"],
+    ["Five Guys", "client-logos/Group_35.svg"],
+    ["Puttery", "client-logos/Clip_path_group-1.svg"],
+    ["BurgerFi", "client-logos/Group_25.svg"],
+    ["Häagen-Dazs", "client-logos/Group_28.svg"],
+    ["Jersey Mike's Subs", "client-logos/Clip_path_group-9.svg"],
+    ["Krispy Kreme", "client-logos/Group_27.svg"],
+    ["Popeyes Louisiana Kitchen", "client-logos/Clip_path_group-7.svg"],
+    ["Jimmy John's", "client-logos/Clip_path_group-13.svg"],
+    ["Moe's Southwest Grill", "client-logos/Group_43.svg"],
+    ["Wingstop", "client-logos/Clip_path_group-4.svg"],
+    ["Smoothie King", "client-logos/Clip_path_group-6.svg"],
+    ["Tropical Smoothie Cafe", "client-logos/Group_29.svg"],
+    ["Marco's Pizza", "client-logos/Clip_path_group-8.svg"],
+    ["7-Eleven", "client-logos/Group_26.svg"],
+    ["Gopuff", "client-logos/gopuff.svg"],
+    ["F45 Training", "client-logos/Vector.svg"],
+    ["Crunch Fitness", "client-logos/Clip_path_group-5.svg"],
+    ["Shapes Fitness for Women", "client-logos/Group_30.svg"],
+    ["Great Clips", "client-logos/Clip_path_group-12.svg"],
+    ["Clean Juice", "client-logos/Clip_path_group-11.svg"],
+    ["Joe & The Juice", "client-logos/Clip_path_group-10.svg"],
+    ["Menchie's Frozen Yogurt", "client-logos/Group_34.svg"],
+    ["Crêpe Delicious", "client-logos/Group_33.svg"],
+    ["Luke's Lobster", "client-logos/Clip_path_group-2.svg"],
+    ["Teriyaki Madness", "client-logos/Group_32.svg"],
+    ["Yardbird", "client-logos/Clip_path_group.svg"],
+    ["Cowboy Chicken", "client-logos/Group_39.svg"],
+    ["Playa Bowls", "client-logos/Group.svg"],
+    ["Nautical Bowls", "client-logos/Nautical.svg"],
+    ["Pasión del Cielo Coffee", "client-logos/Clip_path_group-3.svg"],
+    ["Charleys Philly Steaks", "client-logos/Group_38.svg"],
+    ["Mici Italian", "client-logos/Group_36.svg"],
+    ["Strickland Brothers 10 Minute Oil Change", "client-logos/Group_31.svg"],
+    ["Goji", "client-logos/Group_40.svg"],
+    ["SWTHZ", "client-logos/3f8c98f3c59839509a9242646ac5c0b76168.svg"],
+    ["Crumbl Cookies", "client-logos/Clip_path_group-14.svg"],
+    ["CycleBar", "client-logos/Group_1597880384.svg"],
+    ["Dairy Queen", "client-logos/Group_37.svg"],
+  ];
+
+  document.getElementById('clientsGrid').innerHTML = clientLogos.map(([n, logo]) =>
+    `<div class="client-cell" title="${n}"><img class="client-logo" src="${logo}" alt="${n}" loading="lazy"/></div>`
+  ).join('');
+
+  // ============ COVERAGE MAP ============
+  const coverageData = {
+    // licensed states — FIPS: {name, status, projects, metro}
+    "12": { name: "Florida", status: "HQ", projects: 62, metro: "Miami · Orlando · Tampa · Jax" },
+    "13": { name: "Georgia", status: "Active", projects: 11, metro: "Atlanta · Savannah" },
+    "37": { name: "North Carolina", status: "Active", projects: 8, metro: "Charlotte · Raleigh" },
+    "45": { name: "South Carolina", status: "Active", projects: 5, metro: "Charleston · Greenville" },
+    "51": { name: "Virginia", status: "Active", projects: 6, metro: "Richmond · NoVa" },
+    "54": { name: "West Virginia", status: "Active", projects: 2, metro: "Charleston" },
+    "11": { name: "Washington, DC", status: "Active", projects: 3, metro: "DC Metro" },
+    "24": { name: "Maryland", status: "Active", projects: 4, metro: "Baltimore · Bethesda" },
+    "10": { name: "Delaware", status: "Active", projects: 2, metro: "Wilmington" },
+    "42": { name: "Pennsylvania", status: "Active", projects: 5, metro: "Philadelphia · Pittsburgh" },
+    "34": { name: "New Jersey", status: "Active", projects: 6, metro: "Newark · Jersey City" },
+    "36": { name: "New York", status: "Active", projects: 9, metro: "NYC · Long Island · Albany" },
+    "09": { name: "Connecticut", status: "Active", projects: 3, metro: "Hartford · Stamford" },
+    "44": { name: "Rhode Island", status: "Active", projects: 1, metro: "Providence" },
+    "25": { name: "Massachusetts", status: "Active", projects: 4, metro: "Boston · Worcester" },
+    "33": { name: "New Hampshire", status: "Active", projects: 2, metro: "Manchester" },
+    "50": { name: "Vermont", status: "Active", projects: 1, metro: "Burlington" },
+    "23": { name: "Maine", status: "Active", projects: 2, metro: "Portland" },
+  };
+
+  const stateNamesByFips = {
+    "01":"Alabama","02":"Alaska","04":"Arizona","05":"Arkansas","06":"California","08":"Colorado","09":"Connecticut",
+    "10":"Delaware","11":"DC","12":"Florida","13":"Georgia","15":"Hawaii","16":"Idaho","17":"Illinois","18":"Indiana",
+    "19":"Iowa","20":"Kansas","21":"Kentucky","22":"Louisiana","23":"Maine","24":"Maryland","25":"Massachusetts",
+    "26":"Michigan","27":"Minnesota","28":"Mississippi","29":"Missouri","30":"Montana","31":"Nebraska","32":"Nevada",
+    "33":"New Hampshire","34":"New Jersey","35":"New Mexico","36":"New York","37":"North Carolina","38":"North Dakota",
+    "39":"Ohio","40":"Oklahoma","41":"Oregon","42":"Pennsylvania","44":"Rhode Island","45":"South Carolina",
+    "46":"South Dakota","47":"Tennessee","48":"Texas","49":"Utah","50":"Vermont","51":"Virginia","53":"Washington",
+    "54":"West Virginia","55":"Wisconsin","56":"Wyoming"
+  };
+  const stateAbbrByFips = {
+    "01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA",
+    "15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA",
+    "26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY",
+    "37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX",
+    "49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"
+  };
+
+  async function initCoverageMap() {
+    const svg = document.getElementById('usMap');
+    if (!svg) return;
+    try {
+      // Load d3 + topojson from CDN
+      if (!window.d3 || !window.topojson) {
+        await Promise.all([
+          loadScript('https://unpkg.com/d3@7.9.0/dist/d3.min.js'),
+          loadScript('https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js'),
+        ]);
+      }
+      const us = await fetch('https://unpkg.com/us-atlas@3.0.1/states-10m.json').then(r => r.json());
+      const states = topojson.feature(us, us.objects.states).features;
+
+      const projection = d3.geoAlbersUsa().fitSize([960, 600], topojson.feature(us, us.objects.states));
+      const path = d3.geoPath(projection);
+
+      const NS = 'http://www.w3.org/2000/svg';
+      const gStates = document.createElementNS(NS, 'g');
+      const gLabels = document.createElementNS(NS, 'g');
+      svg.appendChild(gStates);
+      svg.appendChild(gLabels);
+
+      states.forEach(f => {
+        const fips = String(f.id).padStart(2,'0');
+        const d = path(f);
+        if (!d) return;
+        const el = document.createElementNS(NS, 'path');
+        el.setAttribute('d', d);
+        el.setAttribute('class', 'state');
+        el.dataset.fips = fips;
+        el.dataset.name = stateNamesByFips[fips] || '';
+        const data = coverageData[fips];
+        if (data) {
+          el.classList.add(data.status === 'HQ' ? 'hq' : 'licensed');
+          el.dataset.status = data.status;
+          el.dataset.projects = data.projects;
+          el.dataset.metro = data.metro;
+        }
+        gStates.appendChild(el);
+
+        // abbreviation label
+        const [cx, cy] = path.centroid(f);
+        if (!isNaN(cx)) {
+          const t = document.createElementNS(NS, 'text');
+          t.setAttribute('x', cx);
+          t.setAttribute('y', cy + 3);
+          t.setAttribute('class', 'state-label' + (data ? '' : ' dim'));
+          t.textContent = stateAbbrByFips[fips] || '';
+          gLabels.appendChild(t);
+        }
+      });
+
+      // HQ pulse marker on Florida
+      const fl = states.find(f => String(f.id).padStart(2,'0') === '12');
+      if (fl) {
+        const [fx, fy] = path.centroid(fl);
+        const gHq = document.createElementNS(NS, 'g');
+        gHq.setAttribute('transform', `translate(${fx}, ${fy + 30})`);
+        const pulse = document.createElementNS(NS, 'circle');
+        pulse.setAttribute('r', 4);
+        pulse.setAttribute('class', 'hq-pulse');
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('r', 4);
+        dot.setAttribute('class', 'hq-marker');
+        gHq.appendChild(pulse);
+        gHq.appendChild(dot);
+        svg.appendChild(gHq);
+      }
+
+      document.getElementById('coverageLoading').classList.add('hidden');
+      setupMapInteractions();
+      buildCoveragePills();
+    } catch (err) {
+      console.error('Map load failed', err);
+      document.getElementById('coverageLoading').textContent = 'Map unavailable';
+    }
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function setupMapInteractions() {
+    const svg = document.getElementById('usMap');
+    const tip = document.getElementById('coverageTip');
+    const wrap = document.getElementById('coverageMap');
+
+    svg.addEventListener('mousemove', (e) => {
+      const el = e.target.closest('.state');
+      if (!el || (!el.classList.contains('licensed') && !el.classList.contains('hq'))) {
+        tip.classList.remove('visible');
+        return;
+      }
+      const rect = wrap.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      tip.style.left = x + 'px';
+      tip.style.top = y + 'px';
+      tip.querySelector('.tip-state').textContent = el.dataset.name;
+      tip.querySelector('.tip-status').textContent = el.dataset.status;
+      tip.querySelector('.tip-projects').textContent = el.dataset.projects;
+      tip.querySelector('.tip-metro').textContent = el.dataset.metro;
+      tip.classList.add('visible');
+    });
+    svg.addEventListener('mouseleave', () => tip.classList.remove('visible'));
+  }
+
+  function buildCoveragePills() {
+    const pills = document.getElementById('coveragePills');
+    const entries = Object.entries(coverageData).sort((a, b) => {
+      if (a[1].status === 'HQ') return -1;
+      if (b[1].status === 'HQ') return 1;
+      return a[1].name.localeCompare(b[1].name);
+    });
+    pills.innerHTML = entries.map(([fips, d]) =>
+      `<button class="coverage-pill ${d.status === 'HQ' ? 'hq' : ''}" data-fips="${fips}">${d.name}</button>`
+    ).join('');
+    pills.addEventListener('click', (e) => {
+      const btn = e.target.closest('.coverage-pill');
+      if (!btn) return;
+      document.querySelectorAll('.coverage-pill').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
+      if (st) st.classList.add('active');
+    });
+    pills.addEventListener('mouseover', (e) => {
+      const btn = e.target.closest('.coverage-pill');
+      if (!btn) return;
+      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
+      if (st) st.classList.add('active');
+    });
+    pills.addEventListener('mouseout', (e) => {
+      const btn = e.target.closest('.coverage-pill');
+      if (!btn) return;
+      if (btn.classList.contains('active')) return;
+      const st = document.querySelector(`.state[data-fips="${btn.dataset.fips}"]`);
+      if (st) st.classList.remove('active');
+    });
+  }
+
+  initCoverageMap();
+
+  // ============ SMOOTH SCROLL + ACTIVE NAV ============
+  document.querySelectorAll('.nav a, .hero-buttons a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav a');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav a[href="#${en.target.id}"]`);
+        link?.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => navObs.observe(s));
+
+  // ============ FORM ============
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+    const name = form.name, email = form.email, details = form.details;
+
+    [name, email, details].forEach(f => f.closest('.form-field').classList.remove('error'));
+
+    if (!name.value.trim()) { name.closest('.form-field').classList.add('error'); valid = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.closest('.form-field').classList.add('error'); valid = false; }
+    if (details.value.trim().length < 10) { details.closest('.form-field').classList.add('error'); valid = false; }
+
+    if (valid) {
+      document.getElementById('formSuccess').classList.add('show');
+      form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+      setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 6000);
+    }
+  });
+
+  // ============ TWEAKS ============
+  let currentTweaks = { ...TWEAK_DEFAULTS };
+
+  const headlineMap = {
+    bond: ['Building More Than', 'a <span class="accent">Bond</span>.'],
+    trust: ['Built on', '<span class="accent">Trust</span>.'],
+    precision: ['Built with', '<span class="accent">Precision</span>.']
+  };
+
+  function applyTweaks(t) {
+    document.documentElement.style.setProperty('--yellow', t.accent);
+    // darker hover shade
+    document.documentElement.style.setProperty('--yellow-hover',
+      t.accent === '#F1C231' ? '#D9AC24' :
+      t.accent === '#FFFFFF' ? '#E5E5E5' :
+      shade(t.accent, -12));
+
+    // headline
+    const h1 = document.querySelector('.hero h1');
+    if (h1 && headlineMap[t.headline]) {
+      h1.innerHTML = `${headlineMap[t.headline][0]}<br/>${headlineMap[t.headline][1]}`;
+    }
+
+    // font
+    document.querySelectorAll('.display, .logo-text span:first-child, .stat-num, .service-card h3, .project-info h3, .value-card h3, .contact-info-item .value, .form-head h3, .footer-marquee').forEach(el => {
+      el.style.fontFamily = `'${t.font}', 'Inter', sans-serif`;
+    });
+    // Load Google font if not default
+    if (t.font !== 'Space Grotesk') {
+      const id = 'gfont-' + t.font.replace(/\s/g,'');
+      if (!document.getElementById(id)) {
+        const link = document.createElement('link');
+        link.id = id;
+        link.rel = 'stylesheet';
+        link.href = `https://fonts.googleapis.com/css2?family=${t.font.replace(/\s/g,'+')}:wght@400;500;600;700&display=swap`;
+        document.head.appendChild(link);
+      }
+    }
+
+    // grid
+    document.querySelector('.projects-grid').style.gridTemplateColumns = `repeat(${t.grid}, 1fr)`;
+
+    // Swatches active state
+    document.querySelectorAll('.tweak-swatch').forEach(s => s.classList.toggle('active', s.dataset.accent === t.accent));
+    document.querySelectorAll('#headlineChips .tweak-chip').forEach(c => c.classList.toggle('active', c.dataset.headline === t.headline));
+    document.querySelectorAll('#fontChips .tweak-chip').forEach(c => c.classList.toggle('active', c.dataset.font === t.font));
+    document.querySelectorAll('#gridChips .tweak-chip').forEach(c => c.classList.toggle('active', c.dataset.grid === t.grid));
+  }
+
+  function shade(hex, pct) {
+    const h = hex.replace('#','');
+    const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+    const f = (c) => Math.max(0, Math.min(255, Math.round(c + (c * pct/100))));
+    return `#${f(r).toString(16).padStart(2,'0')}${f(g).toString(16).padStart(2,'0')}${f(b).toString(16).padStart(2,'0')}`;
+  }
+
+  function setTweak(key, value) {
+    currentTweaks[key] = value;
+    applyTweaks(currentTweaks);
+    try {
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
+    } catch(e) {}
+  }
+
+  document.getElementById('accentSwatches').addEventListener('click', (e) => {
+    const s = e.target.closest('.tweak-swatch');
+    if (s) setTweak('accent', s.dataset.accent);
+  });
+  document.getElementById('headlineChips').addEventListener('click', (e) => {
+    const c = e.target.closest('.tweak-chip');
+    if (c) setTweak('headline', c.dataset.headline);
+  });
+  document.getElementById('fontChips').addEventListener('click', (e) => {
+    const c = e.target.closest('.tweak-chip');
+    if (c) setTweak('font', c.dataset.font);
+  });
+  document.getElementById('gridChips').addEventListener('click', (e) => {
+    const c = e.target.closest('.tweak-chip');
+    if (c) setTweak('grid', c.dataset.grid);
+  });
+
+  // Apply defaults on load
+  applyTweaks(currentTweaks);
+
+  // Edit-mode host integration (listener FIRST, then announce)
+  function openTweaks() { document.getElementById('tweaksPanel').classList.add('open'); }
+  function closeTweaks() { document.getElementById('tweaksPanel').classList.remove('open'); }
+  window.addEventListener('message', (ev) => {
+    if (!ev.data || typeof ev.data !== 'object') return;
+    if (ev.data.type === '__activate_edit_mode') openTweaks();
+    if (ev.data.type === '__deactivate_edit_mode') closeTweaks();
+  });
+  try {
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  } catch(e) {}
+
+  // Auto-print once ready
+  (async () => {
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    } catch(e) {}
+    // Wait for images (logos, map)
+    const imgs = Array.from(document.images || []);
+    await Promise.all(imgs.map(img => img.complete ? Promise.resolve() :
+      new Promise(res => { img.addEventListener('load', res); img.addEventListener('error', res); })));
+    // Extra buffer for map render + layout settle
+    await new Promise(r => setTimeout(r, 1200));
+    window.print();
+  })();
+
+</script>
+</body>
+</html>

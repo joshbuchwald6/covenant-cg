@@ -1,0 +1,49 @@
+[
+  {
+    "id": "cap_mo4z0emz_qz6wav",
+    "selector": "img",
+    "label": "img",
+    "tag": "img",
+    "url": "https://novobudowa.pl/en",
+    "title": "Home page",
+    "timestamp": "2026-04-18T23:30:56.411Z",
+    "innerText": "",
+    "outerHTML": "<img alt=\"Unknown Image\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" src=\"https://www.datocms-assets.com/111198/1704376223-ilustracja_strefa_architekta.svg\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent; --focus-x: 0.5; --focus-y: 0.5;\">",
+    "rect": {
+      "x": 135,
+      "y": 74,
+      "width": 545,
+      "height": 467
+    },
+    "computedStyles": {
+      "display": "block",
+      "position": "absolute",
+      "top": "0px",
+      "right": "0px",
+      "bottom": "0px",
+      "left": "0px",
+      "width": "544.523px",
+      "height": "466.734px",
+      "border": "0px none rgba(0, 0, 0, 0)",
+      "box-sizing": "border-box",
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "color": "rgba(0, 0, 0, 0)",
+      "font-family": "Brockmann, \"Brockmann Fallback\", system-ui, Arial",
+      "font-size": "16px",
+      "text-decoration": "none",
+      "overflow": "clip",
+      "transition": "all",
+      "object-fit": "cover"
+    },
+    "cssRules": [
+      {
+        "selector": "*, ::before, ::after",
+        "css": "box-sizing: border-box;"
+      },
+      {
+        "selector": ".kTAyZg img",
+        "css": "--container-width: 100cqw; --container-height: 100cqh; --image-width: calc(var(--container-width) - 100%); --image-height: calc(var(--container-height) - 100%); object-position: clamp(100%,0.5 * var(--container-width) - var(--focus-x,0.5) * var(--image-width),0%) clamp(100%,0.5 * var(--container-height) - var(--focus-y,0.5) * var(--image-height),0%);"
+      }
+    ]
+  }
+]
