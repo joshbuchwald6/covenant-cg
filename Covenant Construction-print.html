@@ -2477,7 +2477,8 @@
       const j = await r.json().catch(() => ({}));
 
       if (!r.ok || !j.ok) {
-        showFormApiError(j.error || 'Something went wrong. Please try again or email us directly.');
+        const msg = [j.error, j.hint].filter(Boolean).join(' ')
+        showFormApiError(msg || 'Something went wrong. Please try again or email us directly.');
         return;
       }
 

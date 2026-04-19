@@ -55,6 +55,19 @@ function parseBody (req) {
   return {}
 }
 
+/** Resend returns { message, name } — surface safe messages so owners can fix config */
+function userFacingSendError (error) {
+  if (!error || typeof error !== 'object') {
+    return 'Could not send your message. Please try again or email us directly.'
+  }
+  const msg = String(error.message || '').trim()
+  if (!msg) {
+    return 'Could not send your message. Please try again or email us directly.'
+  }
+  // API messages are short and actionable; cap length defensively
+  return msg.length > 500 ? `${msg.slice(0, 497)}…` : msg
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
@@ -146,11 +159,19 @@ module.exports = async (req, res) => {
     })
 
     if (error) {
-      console.error('Resend error:', error)
+      console.error('Resend error:', JSON.stringify(error, null, 2))
+      const hint =
+        /only send|testing emails|verify your domain|not verified|invalid.*from/i.test(
+          String(error.message || '')
+        )
+      const errorText = userFacingSendError(error)
       return res.status(502).json({
         ok: false,
-        error:
-          'Could not send your message. Please try again or email us directly.'
+        error: errorText,
+        ...(hint && {
+          hint:
+            'Using onboarding@resend.dev only allows delivery to your Resend login email until covenant-cg.com is verified in Resend. Set CONTACT_TO_EMAIL to that email for testing, or verify the domain and set CONTACT_FROM to an address @your domain.'
+        })
       })
     }
 
