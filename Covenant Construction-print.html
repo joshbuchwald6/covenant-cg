@@ -47,10 +47,10 @@
   }
   @media (max-width: 960px) {
     html {
-      scroll-padding-top: calc(140px + env(safe-area-inset-top, 0px));
+      scroll-padding-top: calc(176px + env(safe-area-inset-top, 0px));
     }
     section[id] {
-      scroll-margin-top: calc(140px + env(safe-area-inset-top, 0px));
+      scroll-margin-top: calc(176px + env(safe-area-inset-top, 0px));
     }
   }
   body {
@@ -2014,7 +2014,7 @@
     const headerEl = document.getElementById('header');
     const navH = headerEl ? headerEl.offsetHeight : 76;
     const narrow = window.matchMedia('(max-width: 960px)').matches;
-    const gutter = narrow ? 48 : 20;
+    const gutter = narrow ? 72 : 20;
     const top = el.getBoundingClientRect().top + window.scrollY - navH - gutter;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
