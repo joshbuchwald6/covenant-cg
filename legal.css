@@ -363,8 +363,10 @@ a { color: inherit; }
   letter-spacing: 0.1em;
 }
 .footer-links { display: flex; gap: 24px; }
-.footer-links a {
-  color: rgba(255,255,255,0.6);
+.footer-links a,
+.footer-links a:link,
+.footer-links a:visited {
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.2s ease;
   font-size: 12px;
