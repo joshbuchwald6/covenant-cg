@@ -743,12 +743,23 @@
     grid-template-columns: 1fr;
     gap: 0;
     align-items: start;
-    margin-bottom: 32px;
-    padding-bottom: 24px;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .coverage-header-left .section-label { color: var(--yellow); }
   .coverage-header-left .section-label::before { background: var(--yellow); }
+  .coverage-header-left h2 {
+    color: var(--white);
+    max-width: 22ch;
+  }
+  .coverage-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 52ch;
+    margin-top: 4px;
+  }
 
   .coverage-map-wrap {
     position: relative;
@@ -1231,6 +1242,7 @@
     .service-card.feat h3 { font-size: 22px; }
     .project-info h3 { font-size: 18px; }
     .value-card h3 { font-size: 26px; }
+    .coverage-header-left h2 { font-size: clamp(30px, 8.5vw, 40px); max-width: none; }
     .clients-grid { grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
     .contact-form { padding: 20px; }
     .btn { font-size: 13px; padding: 11px 18px; }
@@ -1677,6 +1689,8 @@
     <div class="coverage-header fade">
       <div class="coverage-header-left">
         <div class="section-label">Where We Build</div>
+        <h2 class="display section-heading" style="margin: 16px 0 16px;">Licensed &amp; active across 18 states.</h2>
+        <p class="coverage-sub">Covenant holds active general contractor licensing, insurance, and bonding across the Eastern seaboard.</p>
       </div>
     </div>
 
