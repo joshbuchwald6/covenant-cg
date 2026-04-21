@@ -110,10 +110,13 @@ module.exports = async (req, res) => {
     return res.status(400).json({ ok: false, error: 'Invalid input.' })
   }
 
-  const to = process.env.CONTACT_TO_EMAIL || 'devinrlondos@gmail.com'
+  const to = (process.env.CONTACT_TO_EMAIL || 'devin@covenant-cg.com,mike@covenant-cg.com')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
   const from =
     process.env.CONTACT_FROM ||
-    'Covenant Website <onboarding@resend.dev>'
+    'Covenant Website <noreply@covenant-cg.com>'
 
   const serviceLabel = SERVICE_LABEL[service] || service
   const subject = `Website inquiry: ${oneLine(name).slice(0, 120)} — ${serviceLabel}`
@@ -151,7 +154,7 @@ module.exports = async (req, res) => {
   try {
     const { data, error } = await resend.emails.send({
       from,
-      to: [to],
+      to,
       replyTo: email,
       subject,
       html,
@@ -170,7 +173,7 @@ module.exports = async (req, res) => {
         error: errorText,
         ...(hint && {
           hint:
-            'Using onboarding@resend.dev only allows delivery to your Resend login email until covenant-cg.com is verified in Resend. Set CONTACT_TO_EMAIL to that email for testing, or verify the domain and set CONTACT_FROM to an address @your domain.'
+            'Verify covenant-cg.com in Resend (add the DNS records in your Resend dashboard to Vercel/your DNS provider). Until then, Resend only allows sending to your Resend login email. Once verified, CONTACT_FROM must be an address @covenant-cg.com.'
         })
       })
     }
