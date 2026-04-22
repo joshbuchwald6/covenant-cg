@@ -116,7 +116,7 @@ module.exports = async (req, res) => {
     .filter(Boolean)
   const from =
     process.env.CONTACT_FROM ||
-    'Covenant Website <noreply@covenant-cg.com>'
+    'Covenant Website <website@send.covenant-cg.com>'
 
   const serviceLabel = SERVICE_LABEL[service] || service
   const subject = `Website inquiry: ${oneLine(name).slice(0, 120)} — ${serviceLabel}`
